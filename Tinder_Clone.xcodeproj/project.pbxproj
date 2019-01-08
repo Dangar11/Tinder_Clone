@@ -12,6 +12,9 @@
 		DD8DAFFD21E504C5000E7E5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD8DAFFB21E504C5000E7E5E /* Main.storyboard */; };
 		DD8DAFFF21E504C6000E7E5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD8DAFFE21E504C6000E7E5E /* Assets.xcassets */; };
 		DD8DB00221E504C6000E7E5E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD8DB00021E504C6000E7E5E /* LaunchScreen.storyboard */; };
+		DD8DB00B21E509C0000E7E5E /* Extensions+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB00A21E509C0000E7E5E /* Extensions+UIView.swift */; };
+		DD8DB00E21E50ED0000E7E5E /* HomeBottomControlsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB00D21E50ED0000E7E5E /* HomeBottomControlsStackView.swift */; };
+		DD8DB01021E515D8000E7E5E /* TopNavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB00F21E515D8000E7E5E /* TopNavigationStackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		DD8DAFFE21E504C6000E7E5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD8DB00121E504C6000E7E5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DD8DB00321E504C6000E7E5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DD8DB00A21E509C0000E7E5E /* Extensions+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extensions+UIView.swift"; sourceTree = "<group>"; };
+		DD8DB00D21E50ED0000E7E5E /* HomeBottomControlsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomControlsStackView.swift; sourceTree = "<group>"; };
+		DD8DB00F21E515D8000E7E5E /* TopNavigationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +60,8 @@
 		DD8DAFF621E504C5000E7E5E /* Tinder_Clone */ = {
 			isa = PBXGroup;
 			children = (
+				DD8DB00C21E50E9B000E7E5E /* Views */,
+				DD8DB00921E50985000E7E5E /* Extensions */,
 				DD8DAFF721E504C5000E7E5E /* AppDelegate.swift */,
 				DD8DAFF921E504C5000E7E5E /* ViewController.swift */,
 				DD8DAFFB21E504C5000E7E5E /* Main.storyboard */,
@@ -62,6 +70,23 @@
 				DD8DB00321E504C6000E7E5E /* Info.plist */,
 			);
 			path = Tinder_Clone;
+			sourceTree = "<group>";
+		};
+		DD8DB00921E50985000E7E5E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DD8DB00A21E509C0000E7E5E /* Extensions+UIView.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		DD8DB00C21E50E9B000E7E5E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DD8DB00D21E50ED0000E7E5E /* HomeBottomControlsStackView.swift */,
+				DD8DB00F21E515D8000E7E5E /* TopNavigationStackView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,7 +161,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD8DAFFA21E504C5000E7E5E /* ViewController.swift in Sources */,
+				DD8DB00E21E50ED0000E7E5E /* HomeBottomControlsStackView.swift in Sources */,
 				DD8DAFF821E504C5000E7E5E /* AppDelegate.swift in Sources */,
+				DD8DB00B21E509C0000E7E5E /* Extensions+UIView.swift in Sources */,
+				DD8DB01021E515D8000E7E5E /* TopNavigationStackView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
