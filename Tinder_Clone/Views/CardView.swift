@@ -70,9 +70,11 @@ class CardView: UIView {
     }
     
     fileprivate func setupLayout() {
-        imageView.contentMode = .scaleAspectFill
+        
         imageView.layer.cornerRadius = 15
+        layer.cornerRadius = 15
         imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
 
         addSubview(imageView)
         imageView.fillSuperview()
@@ -105,6 +107,7 @@ class CardView: UIView {
     fileprivate func setupGradientLayer() {
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
         gradientLayer.locations = [0.5, 1.1]
+        gradientLayer.cornerRadius = 15
         layer.addSublayer(gradientLayer)
     }
     
