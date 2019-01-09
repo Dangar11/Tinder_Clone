@@ -27,6 +27,8 @@ class HomeController: UIViewController {
         return viewModels
     }()
     
+    
+    //MARK: - ViewDidLoad
     override func viewDidLoad() {
         
         super.viewDidLoad()
