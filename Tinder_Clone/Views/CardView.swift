@@ -10,14 +10,13 @@ import UIKit
 
 class CardView: UIView {
     
-    fileprivate let imageView = UIImageView(image: #imageLiteral(resourceName: "IMG_3048-2"))
+    let imageView = UIImageView(image: #imageLiteral(resourceName: "Igor"))
+    let informationLabel = UILabel()
 
     //Configurations
     fileprivate let threshold: CGFloat = 150
     
-    
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -29,6 +28,14 @@ class CardView: UIView {
         
         addSubview(imageView)
         imageView.fillSuperview()
+        
+        addSubview(informationLabel)
+        informationLabel.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor,
+                                padding: .init(top: 0, left: 16, bottom: 16, right: 16))
+        informationLabel.text = "TEST NAME TEST NAME AGE"
+        informationLabel.textColor = .white
+        informationLabel.font = UIFont.systemFont(ofSize: 34, weight: .heavy)
+        informationLabel.numberOfLines = 0
         
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
@@ -68,23 +75,22 @@ class CardView: UIView {
         let shouldDismissRight = gesture.translation(in: nil).x > threshold
         let shouldDismissLeft = gesture.translation(in: nil).x < -threshold
         
-        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
             if shouldDismissRight {
-                self.frame = CGRect(x: 1000, y: 0, width: self.frame.width, height: self.frame.height)
+                self.frame = CGRect(x: 800, y: 0, width: self.frame.width, height: self.frame.height)
 
             } else if shouldDismissLeft {
-                self.frame = CGRect(x: -1000, y: 0, width: self.frame.width, height: self.frame.height)
+                self.frame = CGRect(x: -800, y: 0, width: self.frame.width, height: self.frame.height)
             } else {
                 self.transform = .identity
             }
             
         }) { (_) in
             //bring card back to original state
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.2, options: .curveEaseIn, animations: {
-                self.transform = .identity
-                self.frame = CGRect(x: 0, y: 0, width: self.superview!.frame.width, height: self.superview!.frame.height)
-            }, completion: nil)
-            
+            self.transform = .identity
+            if shouldDismissLeft || shouldDismissRight {
+                self.removeFromSuperview()
+            }
             
         }
     }

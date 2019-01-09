@@ -15,7 +15,7 @@ class HomeBottomControlsStackView: UIStackView {
         super.init(frame: frame)
         
         distribution = .fillEqually
-        heightAnchor.constraint(equalToConstant: 70).isActive = true
+        heightAnchor.constraint(equalToConstant: 80).isActive = true
         
         let subviews = [#imageLiteral(resourceName: "reload"),#imageLiteral(resourceName: "exit"),#imageLiteral(resourceName: "star"),#imageLiteral(resourceName: "like"),#imageLiteral(resourceName: "light")].map { (img) -> UIView in
             let button = UIButton(type: .system)
