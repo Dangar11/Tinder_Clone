@@ -17,6 +17,7 @@
 		DD8DB01021E515D8000E7E5E /* TopNavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB00F21E515D8000E7E5E /* TopNavigationStackView.swift */; };
 		DD8DB01221E5202C000E7E5E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB01121E5202C000E7E5E /* CardView.swift */; };
 		DD8DB01521E61D80000E7E5E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB01421E61D80000E7E5E /* User.swift */; };
+		DD8DB01921E628C8000E7E5E /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB01821E628C8000E7E5E /* CardViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		DD8DB00F21E515D8000E7E5E /* TopNavigationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
 		DD8DB01121E5202C000E7E5E /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		DD8DB01421E61D80000E7E5E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		DD8DB01821E628C8000E7E5E /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 		DD8DAFF621E504C5000E7E5E /* Tinder_Clone */ = {
 			isa = PBXGroup;
 			children = (
+				DD8DB01721E628AB000E7E5E /* View Models */,
 				DD8DB01321E61D73000E7E5E /* Model */,
 				DD8DB00C21E50E9B000E7E5E /* Views */,
 				DD8DB01621E627D3000E7E5E /* Controllers */,
@@ -109,6 +112,14 @@
 				DD8DAFF921E504C5000E7E5E /* HomeController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		DD8DB01721E628AB000E7E5E /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				DD8DB01821E628C8000E7E5E /* CardViewModel.swift */,
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,6 +197,7 @@
 				DD8DB00E21E50ED0000E7E5E /* HomeBottomControlsStackView.swift in Sources */,
 				DD8DAFF821E504C5000E7E5E /* AppDelegate.swift in Sources */,
 				DD8DB00B21E509C0000E7E5E /* Extensions+UIView.swift in Sources */,
+				DD8DB01921E628C8000E7E5E /* CardViewModel.swift in Sources */,
 				DD8DB01221E5202C000E7E5E /* CardView.swift in Sources */,
 				DD8DB01021E515D8000E7E5E /* TopNavigationStackView.swift in Sources */,
 				DD8DB01521E61D80000E7E5E /* User.swift in Sources */,
