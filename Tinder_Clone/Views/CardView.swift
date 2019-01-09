@@ -12,19 +12,37 @@ class CardView: UIView {
     
     var cardViewModel: CardViewModel! {
         didSet {
-            imageView.image = UIImage(named: cardViewModel.imageName)
+            // accessing 0 index will crash use first an optional
+            let imageName = cardViewModel.imageNames.first ?? ""
+            imageView.image = UIImage(named: imageName)
             informationLabel.attributedText = cardViewModel.attributedString
             informationLabel.textAlignment = cardViewModel.textAligment
+            
+            //show bars only when 1 more images in card stack
+            if cardViewModel.imageNames.count > 1 {
+                (0..<cardViewModel.imageNames.count).forEach { (_) in
+                    let barView = UIView()
+                    barView.backgroundColor = barDeselectedColor
+                    barsStackView.addArrangedSubview(barView)
+                }
+                barsStackView.arrangedSubviews.first?.backgroundColor = .white
+            }
+            setupImageIndexObserver()
+            
         }
     }
     
     //encapsulation
-    fileprivate let imageView = UIImageView(image: #imageLiteral(resourceName: "Igor"))
+    fileprivate let imageView = UIImageView()
     fileprivate let informationLabel = UILabel()
+    
 
     //Configurations
     fileprivate let threshold: CGFloat = 120
-    let gradientLayer = CAGradientLayer()
+    fileprivate let gradientLayer = CAGradientLayer()
+    fileprivate let barsStackView = UIStackView()
+    //var imageIndex = 0
+    fileprivate let barDeselectedColor = UIColor(white: 0, alpha: 0.2)
     
     
     override init(frame: CGRect) {
@@ -34,16 +52,31 @@ class CardView: UIView {
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         addGestureRecognizer(panGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        addGestureRecognizer(tapGesture)
+    }
+    
+    
+    fileprivate func setupImageIndexObserver() {
+        cardViewModel.imageIndexObserver = { [weak self] (index, image) in
+            self?.imageView.image = image
+            
+            self?.barsStackView.arrangedSubviews.forEach({ (view) in
+                view.backgroundColor = self?.barDeselectedColor
+            })
+            
+            self?.barsStackView.arrangedSubviews[index].backgroundColor = .white
+        }
     }
     
     fileprivate func setupLayout() {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 15
         imageView.clipsToBounds = true
-        
-        
+
         addSubview(imageView)
         imageView.fillSuperview()
+        setupBarsStackView()
         
         //add gradient layer
         setupGradientLayer()
@@ -57,6 +90,16 @@ class CardView: UIView {
         informationLabel.numberOfLines = 0
     }
     
+    fileprivate func setupBarsStackView() {
+        addSubview(barsStackView)
+        barsStackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor,
+                             padding: .init(top: 8, left: 8, bottom: 0, right: 8), size: .init(width: 0, height: 3))
+        //bars created
+        barsStackView.spacing = 4
+        barsStackView.distribution = .fillEqually
+   
+        
+    }
     
     
     fileprivate func setupGradientLayer() {
@@ -70,7 +113,7 @@ class CardView: UIView {
         gradientLayer.frame = self.frame
     }
     
-    //MARK: - Handle the picture to draging
+    //MARK: - HandlePan Drag Picture
     @objc fileprivate func handlePan(gesture: UIPanGestureRecognizer) {
         
         
@@ -85,6 +128,19 @@ class CardView: UIView {
             handleEndedCase(gesture)
         default:
             ()
+        }
+    }
+    
+    //MARK: - HandleTap Go back and forward
+    @objc fileprivate func handleTap(gesture: UITapGestureRecognizer) {
+        print("Handling tap")
+        let tapLocation = gesture.location(in: nil)
+        let shouldAdvanceNextPhoto = tapLocation.x > frame.width / 2 ? true : false
+        
+        if shouldAdvanceNextPhoto {
+            cardViewModel.advanceToNextPhoto()
+        } else {
+            cardViewModel.goToPreviousPhoto()
         }
     }
     
