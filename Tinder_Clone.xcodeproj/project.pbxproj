@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DD87D7BD21E7A16E005FA9D2 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD87D7BC21E7A16E005FA9D2 /* RegistrationController.swift */; };
 		DD87D7BF21E7A890005FA9D2 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD87D7BE21E7A890005FA9D2 /* CustomTextField.swift */; };
+		DD87D7C121E7D215005FA9D2 /* RagistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD87D7C021E7D215005FA9D2 /* RagistrationViewModel.swift */; };
 		DD8DAFF821E504C5000E7E5E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DAFF721E504C5000E7E5E /* AppDelegate.swift */; };
 		DD8DAFFA21E504C5000E7E5E /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DAFF921E504C5000E7E5E /* HomeController.swift */; };
 		DD8DAFFD21E504C5000E7E5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD8DAFFB21E504C5000E7E5E /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 /* Begin PBXFileReference section */
 		DD87D7BC21E7A16E005FA9D2 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		DD87D7BE21E7A890005FA9D2 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		DD87D7C021E7D215005FA9D2 /* RagistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagistrationViewModel.swift; sourceTree = "<group>"; };
 		DD8DAFF421E504C5000E7E5E /* Tinder_Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tinder_Clone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD8DAFF721E504C5000E7E5E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD8DAFF921E504C5000E7E5E /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 			children = (
 				DD8DAFF921E504C5000E7E5E /* HomeController.swift */,
 				DD87D7BC21E7A16E005FA9D2 /* RegistrationController.swift */,
+				DD87D7C021E7D215005FA9D2 /* RagistrationViewModel.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				DD8DB01921E628C8000E7E5E /* CardViewModel.swift in Sources */,
 				DD8DB01221E5202C000E7E5E /* CardView.swift in Sources */,
 				DD8DB01021E515D8000E7E5E /* TopNavigationStackView.swift in Sources */,
+				DD87D7C121E7D215005FA9D2 /* RagistrationViewModel.swift in Sources */,
 				DD87D7BD21E7A16E005FA9D2 /* RegistrationController.swift in Sources */,
 				DD8DB01521E61D80000E7E5E /* User.swift in Sources */,
 			);
