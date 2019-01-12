@@ -144,7 +144,7 @@ class RegistrationController: UIViewController {
                     self.registeringHUD.textLabel.text = "Register"
                     self.registeringHUD.show(in: self.view)
                 } else {
-                    self.registeringHUD.dismiss()
+                    self.registeringHUD.dismiss(animated: true)
                 }
             })
             
