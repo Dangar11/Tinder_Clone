@@ -27,7 +27,7 @@ extension RegistrationController : UIImagePickerControllerDelegate, UINavigation
 
 class RegistrationController: UIViewController {
 
-    
+    let registeringHUD = JGProgressHUD(style: .dark)
     let gradienLayer = CAGradientLayer()
     let registrationViewModel = RegistrationViewModel()
     
@@ -137,6 +137,16 @@ class RegistrationController: UIViewController {
                 self.registerButton.backgroundColor = .lightGray
                 self.registerButton.setTitleColor(.gray, for: .normal)
             }
+            self.registrationViewModel.bindableIsRegistering.bind(observer: { [unowned self]
+                (isRegistiring) in
+                if isRegistiring == true {
+                    
+                    self.registeringHUD.textLabel.text = "Register"
+                    self.registeringHUD.show(in: self.view)
+                } else {
+                    self.registeringHUD.dismiss()
+                }
+            })
             
         }
         
@@ -158,21 +168,21 @@ class RegistrationController: UIViewController {
     
     @objc fileprivate func handleRegister() {
         self.handleTapDismiss()
-        guard let email = emailTextField.text, let password = passwordTextField.text else { return }
         
-        Auth.auth().createUser(withEmail: email, password: password) { (response, error) in
-            
+        
+        registrationViewModel.performRegistration { [unowned self] (error) in
             if let error = error {
-                print(error)
                 self.showHUDWithEror(error: error)
                 return
             }
-            
-            print("Succeffully registered user: ", response?.user.uid ?? "")
+            print("Finished registering our user")
         }
+        
+        
     }
     
     fileprivate func showHUDWithEror(error: Error) {
+        registeringHUD.dismiss()
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Failed ragistration"
         hud.detailTextLabel.text = error.localizedDescription
@@ -180,9 +190,7 @@ class RegistrationController: UIViewController {
         hud.dismiss(afterDelay: 4, animated: true)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
+
     
     deinit {
         NotificationCenter.default.removeObserver(self)
