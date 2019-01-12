@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		945F10716C73D918E63DA8D3 /* Pods_Tinder_Clone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 309C97177138D55E587CC2A1 /* Pods_Tinder_Clone.framework */; };
 		DD81D91121E809AD0092B806 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD81D91021E809AD0092B806 /* GoogleService-Info.plist */; };
+		DD81D91321EA06130092B806 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD81D91221EA06130092B806 /* Bindable.swift */; };
 		DD87D7BD21E7A16E005FA9D2 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD87D7BC21E7A16E005FA9D2 /* RegistrationController.swift */; };
 		DD87D7BF21E7A890005FA9D2 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD87D7BE21E7A890005FA9D2 /* CustomTextField.swift */; };
 		DD87D7C121E7D215005FA9D2 /* RagistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD87D7C021E7D215005FA9D2 /* RagistrationViewModel.swift */; };
@@ -31,6 +32,7 @@
 		309C97177138D55E587CC2A1 /* Pods_Tinder_Clone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tinder_Clone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F1236930C0CC2569C67C124 /* Pods-Tinder_Clone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tinder_Clone.debug.xcconfig"; path = "Target Support Files/Pods-Tinder_Clone/Pods-Tinder_Clone.debug.xcconfig"; sourceTree = "<group>"; };
 		DD81D91021E809AD0092B806 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DD81D91221EA06130092B806 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		DD87D7BC21E7A16E005FA9D2 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		DD87D7BE21E7A890005FA9D2 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		DD87D7C021E7D215005FA9D2 /* RagistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagistrationViewModel.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				DD8DAFF921E504C5000E7E5E /* HomeController.swift */,
 				DD87D7BC21E7A16E005FA9D2 /* RegistrationController.swift */,
 				DD87D7C021E7D215005FA9D2 /* RagistrationViewModel.swift */,
+				DD81D91221EA06130092B806 /* Bindable.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD81D91321EA06130092B806 /* Bindable.swift in Sources */,
 				DD8DAFFA21E504C5000E7E5E /* HomeController.swift in Sources */,
 				DD87D7BF21E7A890005FA9D2 /* CustomTextField.swift in Sources */,
 				DD8DB00E21E50ED0000E7E5E /* HomeBottomControlsStackView.swift in Sources */,

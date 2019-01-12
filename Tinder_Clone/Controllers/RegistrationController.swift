@@ -10,6 +10,21 @@ import UIKit
 import Firebase
 import JGProgressHUD
 
+
+extension RegistrationController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+       let image = info[.originalImage] as? UIImage
+        registrationViewModel.bindableImage.value = image
+        //registrationViewModel.image = image
+        dismiss(animated: true, completion: nil)
+    }
+}
+
 class RegistrationController: UIViewController {
 
     
@@ -24,8 +39,11 @@ class RegistrationController: UIViewController {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 32, weight: .heavy)
         button.backgroundColor = .white
         button.setTitleColor(.black, for: .normal)
-        button.heightAnchor.constraint(equalToConstant: 280).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 300).isActive = true
         button.layer.cornerRadius = 15
+        button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.clipsToBounds = true
         return button
     }()
     
@@ -109,8 +127,8 @@ class RegistrationController: UIViewController {
     
     fileprivate func setupRegistrationViewModelObserver() {
     
-        registrationViewModel.isFormValidObserver = { [unowned self] (isFormValid) in
-            
+        registrationViewModel.bindableIsFormValid.bind { [unowned self] (isFormValid) in
+            guard  let isFormValid = isFormValid else { return }
             self.registerButton.isEnabled = isFormValid
             if isFormValid {
                 self.registerButton.backgroundColor = #colorLiteral(red: 0.8444415416, green: 0.1672765535, blue: 0.2078253552, alpha: 0.6591395548)
@@ -121,6 +139,21 @@ class RegistrationController: UIViewController {
             }
             
         }
+        
+        registrationViewModel.bindableImage.bind { [unowned self] (img) in
+            self.selectPhotoButton.setImage(img?.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+//        registrationViewModel.imageObserver = { [unowned self] img in
+//            self.selectPhotoButton.setImage(img?.withRenderingMode(.alwaysOriginal), for: .normal)
+//        }
+    }
+    
+    @objc fileprivate func handleSelectPhoto() {
+        let imagePickerController = UIImagePickerController()
+        view.endEditing(true)
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true)
+        
     }
     
     @objc fileprivate func handleRegister() {
@@ -147,10 +180,20 @@ class RegistrationController: UIViewController {
         hud.dismiss(afterDelay: 4, animated: true)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+            print("Deinit")
+    }
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self) // you'll have a retain cycle if you don't remove
+       // NotificationCenter.default.removeObserver(self) // you'll have a retain cycle if you don't remove
+        
     }
     
     
@@ -202,13 +245,11 @@ class RegistrationController: UIViewController {
     
     @objc fileprivate func handleKeyboardShow(notification: Notification) {
         
-        print(notification)
         guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardFrame = value.cgRectValue
         let padding: CGFloat = 8
         //how tall gap is from register button to the buttom of the screen
         let bottomSpace = view.frame.height - overallStackView.frame.origin.y - overallStackView.frame.height
-        print(bottomSpace)
         let difference = keyboardFrame.height - bottomSpace + padding
         
         UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
