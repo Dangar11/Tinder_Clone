@@ -37,8 +37,9 @@ class HomeController: UIViewController {
     }
     
     @objc fileprivate func handleSettings() {
-        let registationController = RegistrationController()
-        present(registationController, animated: true)
+        let settingsController = SettingsController()
+        let navController = UINavigationController(rootViewController: settingsController)
+        present(navController, animated: true)
         print("Show registration page")
     }
     
@@ -53,7 +54,7 @@ class HomeController: UIViewController {
         hud.show(in: view)
         //pagination 2 users at a time
         let query = Firestore.firestore().collection("users").order(by: "uuid").start(after: [lastfetchedUser?.uid ?? ""]).limit(to: 2)
-        query.getDocuments { (snapshot, error) in
+        query.getDocuments { [unowned self] (snapshot, error) in
             hud.dismiss()
             if let error = error {
                 print("Failed to fetch users: ", error)
