@@ -40,7 +40,6 @@ class HomeController: UIViewController {
         let settingsController = SettingsController()
         let navController = UINavigationController(rootViewController: settingsController)
         present(navController, animated: true)
-        print("Show registration page")
     }
     
     @objc fileprivate func handleRefresh() {
