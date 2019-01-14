@@ -8,9 +8,12 @@
 
 import UIKit
 
+
 protocol ProducesCardViewModel {
     func toCardViewModel() -> CardViewModel
 }
+
+
 
 
 //View Model - supposed represent the State of our View

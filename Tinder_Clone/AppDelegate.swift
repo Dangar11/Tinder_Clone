@@ -9,15 +9,20 @@
 import UIKit
 import Firebase
 
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
+        
+     
         
         let db = Firestore.firestore()
         let settings = db.settings
@@ -26,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
-        window?.rootViewController = RegistrationController()
+        window?.rootViewController = HomeController()
         
         
         return true
