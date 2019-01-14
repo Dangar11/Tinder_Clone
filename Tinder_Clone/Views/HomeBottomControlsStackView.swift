@@ -9,6 +9,20 @@
 import UIKit
 
 class HomeBottomControlsStackView: UIStackView {
+    
+    static func createButton(image:UIImage) -> UIButton {
+        let button = UIButton(type: .system)
+        button.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        return button
+    }
+    
+    let refreshButton = createButton(image: #imageLiteral(resourceName: "reload"))
+    let dislikeButton = createButton(image: #imageLiteral(resourceName: "exit"))
+    let superLikeButton = createButton(image: #imageLiteral(resourceName: "star"))
+    let likeButton = createButton(image: #imageLiteral(resourceName: "like"))
+    let specialButton = createButton(image: #imageLiteral(resourceName: "light"))
+    
 
     
     override init(frame: CGRect) {
@@ -17,16 +31,8 @@ class HomeBottomControlsStackView: UIStackView {
         distribution = .fillEqually
         heightAnchor.constraint(equalToConstant: 80).isActive = true
         
-        let subviews = [#imageLiteral(resourceName: "reload"),#imageLiteral(resourceName: "exit"),#imageLiteral(resourceName: "star"),#imageLiteral(resourceName: "like"),#imageLiteral(resourceName: "light")].map { (img) -> UIView in
-            let button = UIButton(type: .system)
-            button.setImage(img.withRenderingMode(.alwaysOriginal), for: .normal)
-            return button
-        }
-        
-        
-        
-        subviews.forEach { (views) in
-            addArrangedSubview(views)
+        [refreshButton, dislikeButton, superLikeButton, likeButton, specialButton].forEach { (button) in
+            self.addArrangedSubview(button)
         }
         
     }
