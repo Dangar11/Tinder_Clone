@@ -17,16 +17,6 @@ class HomeController: UIViewController {
     let buttonsStackView = HomeBottomControlsStackView()
     
     
-//    let cardViewModels: [CardViewModel] = {
-//        let producers = [
-//            User(name: "Igor", age: 24, profession: "iOS Developer", imageNames: ["igor", "igor2", "igor3"]),
-//            User(name: "Tanya", age: 19, profession: "Web-Designer", imageNames: ["tanya", "tanya2", "tanya3"]),
-//            Advertiser(aboutTitle: "Open happiness", brandName: "COCA COLA", posterPhotoName: "coca-cola")
-//        ] as [ProducesCardViewModel]
-//
-//        let viewModels = producers.map { return $0.toCardViewModel()}
-//        return viewModels
-//    }()
     
     var cardViewModels = [CardViewModel]() // empty array
     
@@ -37,7 +27,7 @@ class HomeController: UIViewController {
         
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         setupLayout()
-        setupDummyCards()
+        setupFirestoreUserCards()
         fetchUsersFromFirestore()
         
     }
@@ -50,7 +40,9 @@ class HomeController: UIViewController {
     
     
     fileprivate func fetchUsersFromFirestore() {
-        Firestore.firestore().collection("users").getDocuments { (snapshot, error) in
+        //pagination 2 users at a time
+        let query = Firestore.firestore().collection("users")
+        query.getDocuments { (snapshot, error) in
             if let error = error {
                 print("Failed to fetch users: ", error)
                 return
@@ -62,12 +54,12 @@ class HomeController: UIViewController {
                 self.cardViewModels.append(user.toCardViewModel())
                 
             })
-            self.setupDummyCards()
+            self.setupFirestoreUserCards()
         }
     }
 
     
-    fileprivate func setupDummyCards() {
+    fileprivate func setupFirestoreUserCards() {
         
         
         cardViewModels.forEach { (cardVM) in
