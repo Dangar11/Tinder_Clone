@@ -21,6 +21,7 @@ class SettingsController: UITableViewController {
     var user: User?
     
     
+    
     lazy var header: UIView = {
         
         let padding: CGFloat = 16
@@ -86,7 +87,7 @@ class SettingsController: UITableViewController {
     }
     
     
-
+    //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -118,17 +119,32 @@ class SettingsController: UITableViewController {
     }
     
     fileprivate func loadUserPhotos() {
-        guard let imageUrl = user?.imageUrl1, let url = URL(string: imageUrl) else { return }
-        //call into the cach benefit load directly fron cach when already set in 
-        SDWebImageManager.shared().loadImage(with: url, options: .continueInBackground, progress: nil) { [unowned self](image, _, _, _, _, _) in
-            self.image1Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+        //call into the cach benefit load directly fron cach when already set in
+        if let imageUrl1 = user?.imageUrl1, let url = URL(string: imageUrl1) {
+            loadImage(at: url, in: image1Button)
         }
+        
+        if let imageUrl1 = user?.imageUrl2, let url = URL(string: imageUrl1) {
+            loadImage(at: url, in: image2Button)
+        }
+        
+        if let imageUrl1 = user?.imageUrl3, let url = URL(string: imageUrl1) {
+            loadImage(at: url, in: image3Button)
+        }
+        
+        
 
+    }
+    
+    func loadImage(at url: URL, in button: UIButton) {
+        SDWebImageManager.shared().loadImage(with: url, options: .continueInBackground, progress: nil) { (image, _, _, _, _, _) in
+            button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
     }
     
     
     
-    
+    //MARK: - Navigation
     fileprivate func setupNavigationItem() {
         navigationItem.title = "Settings"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -154,7 +170,29 @@ class SettingsController: UITableViewController {
     
     
     @objc fileprivate func handleSave() {
+        let hud = JGProgressHUD(style: .dark)
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let docData: [String : Any] = [
+            "uuid" : uid,
+            "fullName": user?.name ?? "",
+            "imageUrl1": user?.imageUrl1 ?? "",
+            "imageUrl2": user?.imageUrl2 ?? "",
+            "imageUrl3": user?.imageUrl3 ?? "",
+            "age": user?.age ?? 0,
+            "profession": user?.profession ?? ""
+        ]
         
+        hud.textLabel.text = "Saving settings"
+        hud.show(in: view)
+        
+        Firestore.firestore().collection("users").document(uid).setData(docData) { (error) in
+            if let error = error {
+                print("Failed to save user settings", error)
+                return
+            }
+            hud.dismiss()
+            print("Finished saving user info")
+        }
     }
     
     
@@ -214,6 +252,7 @@ extension SettingsController {
         return section == 0 ? 0 : 1
     }
     
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = SettingsCell(style: .default, reuseIdentifier: nil)
         
@@ -221,11 +260,14 @@ extension SettingsController {
         case 1:
             cell.textField.placeholder = "Enter Name"
             cell.textField.text = user?.name
+            cell.textField.addTarget(self, action: #selector(handleNameChange), for: .editingChanged)
         case 2:
             cell.textField.placeholder = "Enter Profession"
             cell.textField.text = user?.profession
+            cell.textField.addTarget(self, action: #selector(handleProfessionChange), for: .editingChanged)
         case 3:
             cell.textField.placeholder = "Enter Age"
+            cell.textField.addTarget(self, action: #selector(handleAgeChange), for: .editingChanged)
             if let age = user?.age {
                 cell.textField.text = String(describing: age)
             }
@@ -237,9 +279,20 @@ extension SettingsController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    @objc fileprivate func handleNameChange(textField: UITextField) {
         
+        self.user?.name = textField.text
     }
+    
+    @objc fileprivate func handleProfessionChange(textField: UITextField) {
+       self.user?.profession = textField.text
+    }
+    
+    @objc fileprivate func handleAgeChange(textField: UITextField) {
+        self.user?.age = Int(textField.text ?? "")
+    }
+    
+    
     
     
 }
@@ -256,7 +309,41 @@ extension SettingsController: UIImagePickerControllerDelegate, UINavigationContr
         let imageButton = (picker as? CustomImagePickerController)?.imageButton
         imageButton?.setImage(selectedImage?.withRenderingMode(.alwaysOriginal), for: .normal)
         dismiss(animated: true)
+        
+        let filename = UUID().uuidString
+        let reference = Storage.storage().reference(withPath: "/images/\(filename)")
+        guard let uploadData = selectedImage?.jpegData(compressionQuality: 0.75) else { return }
+        
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text  = "Uploading image..."
+        hud.show(in: view)
+        reference.putData(uploadData, metadata: nil) {  (nil, error) in
+            
+            if let error = error {
+                print("Failed to upload image to storage: ", error)
+                return
+            }
+            
+            hud.dismiss()
+            print("Finished uploading image")
+            reference.downloadURL(completion: { [unowned self] (url, err) in
+                if let err = err {
+                    print("Failed to retrieve download URL", err)
+                }
+                print("Finished getting download url: ", url?.absoluteString ?? "")
+                
+                if imageButton == self.image1Button {
+                    self.user?.imageUrl1 = url?.absoluteString
+                } else if imageButton == self.image2Button {
+                    self.user?.imageUrl2 = url?.absoluteString
+                } else {
+                    self.user?.imageUrl3 = url?.absoluteString
+                }
+            })
+        }
     }
+    
+    
     
     
     @objc fileprivate func handleSelectPhoto(button: UIButton) {
