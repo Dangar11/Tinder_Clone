@@ -179,7 +179,9 @@ class SettingsController: UITableViewController {
             "imageUrl2": user?.imageUrl2 ?? "",
             "imageUrl3": user?.imageUrl3 ?? "",
             "age": user?.age ?? 0,
-            "profession": user?.profession ?? ""
+            "profession": user?.profession ?? "",
+            "minSeekingAge": user?.minSeekingAge ?? -1,
+            "maxSeekingAge": user?.maxSeekingAge ?? -1
         ]
         
         hud.textLabel.text = "Saving settings"
@@ -225,9 +227,13 @@ extension SettingsController {
             headerLabel.text = "Profession"
         case 3:
             headerLabel.text = "Age"
-        default:
+        case 4:
             headerLabel.text = "Bio"
+        default:
+            headerLabel.text = "Seeking Age Range"
         }
+        
+        headerLabel.font = UIFont.boldSystemFont(ofSize: 18)
             return headerLabel
         
         
@@ -245,7 +251,7 @@ extension SettingsController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return 6
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -253,7 +259,9 @@ extension SettingsController {
     }
     
     
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = SettingsCell(style: .default, reuseIdentifier: nil)
         
         switch indexPath.section {
@@ -271,13 +279,81 @@ extension SettingsController {
             if let age = user?.age {
                 cell.textField.text = String(describing: age)
             }
-            
-        default:
+        case 4:
             cell.textField.placeholder = "Enter Bio"
+        default:
+            let ageRangeCell = AgeRangeCell(style: .default, reuseIdentifier: nil) // age range cell
+            ageRangeCell.minSlider.addTarget(self, action: #selector(handleMinAgeChange), for: .valueChanged)
+            ageRangeCell.maxSlider.addTarget(self, action: #selector(handleMaxAgeChange), for: .valueChanged)
+            // we need to set up the labels on our cell here
+            ageRangeCell.minLabel.text = "Min: \(user?.minSeekingAge ?? 25)"
+            ageRangeCell.maxLabel.text = "Max: \(user?.maxSeekingAge ?? 35)"
+            smileDetect(sliderValue: Int(user?.minSeekingAge ?? 25), slider: ageRangeCell.minSlider)
+            smileDetect(sliderValue: Int(user?.maxSeekingAge ?? 35), slider: ageRangeCell.maxSlider)
+            ageRangeCell.minSlider.value = 25
+            ageRangeCell.maxSlider.value = 35
+            return ageRangeCell
         }
         
         return cell
     }
+    
+    @objc fileprivate func handleMaxAgeChange(slider: UISlider) {
+        //update maxLabel in my AgeRangeCell
+        let indexPath = IndexPath(row: 0, section: 5)
+        let ageRangeCell = tableView.cellForRow(at: indexPath) as! AgeRangeCell
+        evaluateMinMax()
+        ageRangeCell.maxLabel.text = "Min: \(Int(slider.value))"
+        self.user?.maxSeekingAge = Int(slider.value)
+        smileDetect(sliderValue: Int(slider.value), slider: slider)
+    }
+    
+    
+    @objc fileprivate func handleMinAgeChange(slider: UISlider) {
+        //update minLabel in my AgeRangeCell
+        let indexPath = IndexPath(row: 0, section: 5)
+        let ageRangeCell = tableView.cellForRow(at: indexPath) as! AgeRangeCell
+        evaluateMinMax()
+        ageRangeCell.minLabel.text = "Min: \(Int(slider.value))"
+        self.user?.minSeekingAge = Int(slider.value)
+        smileDetect(sliderValue: Int(slider.value), slider: slider)
+        
+    }
+    
+    fileprivate func evaluateMinMax() {
+        guard let ageRangeCell = tableView.cellForRow(at: [5, 0]) as? AgeRangeCell else { return }
+        let minSliderValue = Int(ageRangeCell.minSlider.value)
+        let maxSliderValue = Int(ageRangeCell.maxSlider.value)
+        let minValue = min(minSliderValue, maxSliderValue)
+        let maxValue = max(minSliderValue, maxSliderValue)
+        ageRangeCell.maxSlider.value = Float(maxValue)
+        ageRangeCell.minSlider.value = Float(minValue)
+        ageRangeCell.minLabel.text = "Min: \(minValue)"
+        ageRangeCell.maxLabel.text = "Max: \(maxValue)"
+        user?.minSeekingAge = minValue
+        user?.maxSeekingAge = maxValue
+    }
+    
+    fileprivate func smileDetect(sliderValue: Int, slider: UISlider) {
+        switch sliderValue {
+        case 18...26 :
+            slider.setThumbImage(UIImage(named: "happy2"), for: .normal)
+        case 26...45 :
+            slider.setThumbImage(UIImage(named: "happy"), for: .normal)
+        case 45...70 :
+            slider.setThumbImage(UIImage(named: "unhappy"), for: .normal)
+        case 70...80:
+            slider.setThumbImage(UIImage(named: "crying"), for: .normal)
+        default :
+            return
+        }
+    }
+    
+    
+    
+    
+    
+   
     
     @objc fileprivate func handleNameChange(textField: UITextField) {
         

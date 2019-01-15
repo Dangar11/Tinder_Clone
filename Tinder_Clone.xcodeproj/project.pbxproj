@@ -27,6 +27,7 @@
 		DD8DB01521E61D80000E7E5E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB01421E61D80000E7E5E /* User.swift */; };
 		DD8DB01921E628C8000E7E5E /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB01821E628C8000E7E5E /* CardViewModel.swift */; };
 		DD8DB01B21E62FC9000E7E5E /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB01A21E62FC9000E7E5E /* Advertiser.swift */; };
+		DDE477D021EE7E9C0023BC4B /* AgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE477CF21EE7E9C0023BC4B /* AgeRangeCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		DD8DB01421E61D80000E7E5E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DD8DB01821E628C8000E7E5E /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		DD8DB01A21E62FC9000E7E5E /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
+		DDE477CF21EE7E9C0023BC4B /* AgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRangeCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 				DD8DB01121E5202C000E7E5E /* CardView.swift */,
 				DD87D7BE21E7A890005FA9D2 /* CustomTextField.swift */,
 				DD082C0E21ED3ECF00ABC240 /* SettingsCell.swift */,
+				DDE477CF21EE7E9C0023BC4B /* AgeRangeCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 				DD8DB01B21E62FC9000E7E5E /* Advertiser.swift in Sources */,
 				DD8DAFF821E504C5000E7E5E /* AppDelegate.swift in Sources */,
 				DD8DB00B21E509C0000E7E5E /* Extensions+UIView.swift in Sources */,
+				DDE477D021EE7E9C0023BC4B /* AgeRangeCell.swift in Sources */,
 				DD8DB01921E628C8000E7E5E /* CardViewModel.swift in Sources */,
 				DD8DB01221E5202C000E7E5E /* CardView.swift in Sources */,
 				DD8DB01021E515D8000E7E5E /* TopNavigationStackView.swift in Sources */,
