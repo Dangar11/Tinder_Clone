@@ -298,7 +298,7 @@ class RegistrationController: UIViewController {
     fileprivate func setupGradientLayer() {
         let topColor = #colorLiteral(red: 0.07058823529, green: 0.7607843137, blue: 0.9137254902, alpha: 1)
         let middleColor = #colorLiteral(red: 0.768627451, green: 0.4431372549, blue: 0.9294117647, alpha: 1)
-        let bottomColor = #colorLiteral(red: 0.9647058824, green: 0.3098039216, blue: 0.3490196078, alpha: 1)
+        let bottomColor = #colorLiteral(red: 1, green: 0.1764705882, blue: 0.3333333333, alpha: 1)
         //make sure to use cgColor for gradient
         gradientLayer.colors = [topColor.cgColor, middleColor.cgColor, bottomColor.cgColor]
         gradientLayer.locations = [0.0, 0.4, 1.0]

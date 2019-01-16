@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import JGProgressHUD
 
-class HomeController: UIViewController, SettingsControllerDelegate, LoginControllerDelegate {
+class HomeController: UIViewController {
     
     
     fileprivate let hud = JGProgressHUD(style: .dark)
@@ -51,11 +51,23 @@ class HomeController: UIViewController, SettingsControllerDelegate, LoginControl
         
     }
     
-    func didFinishLogingIn() {
-        fetchCurrentUser()
+    
+    //MARK: - Selectors
+    @objc fileprivate func handleSettings() {
+        let settingsController = SettingsController()
+        settingsController.delegate = self
+        let navController = UINavigationController(rootViewController: settingsController)
+        present(navController, animated: true)
     }
     
+ 
     
+    @objc fileprivate func handleRefresh() {
+        fetchUsersFromFirestore()
+    }
+    
+    //Delegate
+    //MARK: - Fetching
     fileprivate func fetchCurrentUser() {
         hud.textLabel.text = "Loading"
         hud.show(in: view)
@@ -70,23 +82,6 @@ class HomeController: UIViewController, SettingsControllerDelegate, LoginControl
             self.fetchUsersFromFirestore()
             self.hud.dismiss()
         }
-    }
-    
-    
-    @objc fileprivate func handleSettings() {
-        let settingsController = SettingsController()
-        settingsController.delegate = self
-        let navController = UINavigationController(rootViewController: settingsController)
-        present(navController, animated: true)
-    }
-    
-    func didSaveSettings() {
-        print("Notified of dismisal from SettingsController in HomeController")
-        fetchCurrentUser()
-    }
-    
-    @objc fileprivate func handleRefresh() {
-        fetchUsersFromFirestore()
     }
     
     
@@ -108,15 +103,18 @@ class HomeController: UIViewController, SettingsControllerDelegate, LoginControl
             snapshot?.documents.forEach({ (documentSnapshot) in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
-                self.cardViewModels.append(user.toCardViewModel())
-                self.user = user
-                self.setupCardFromUser(user: user)
+                //Checking for me to exists in card flow and remove from stack of Card
+                if user.uid != Auth.auth().currentUser?.uid {
+                    self.setupCardFromUser(user: user)
+                }
+                
             })
         }
     }
     
     fileprivate func setupCardFromUser(user: User) {
         let cardView = CardView(frame: .zero)
+        cardView.delegate = self
         cardView.cardViewModel = user.toCardViewModel()
         cardDeckView.addSubview(cardView)
         cardDeckView.sendSubviewToBack(cardView)
@@ -158,3 +156,26 @@ class HomeController: UIViewController, SettingsControllerDelegate, LoginControl
     
 }
 
+//Delegate
+
+extension HomeController: SettingsControllerDelegate, LoginControllerDelegate, CardViewDelegate {
+    
+    //LoginControllerDelegate
+    func didFinishLogingIn() {
+        fetchCurrentUser()
+    }
+    
+    func didSaveSettings() {
+        print("Notified of dismisal from SettingsController in HomeController")
+        fetchCurrentUser()
+    }
+    
+    func didTapMoreInfo() {
+        let userDetailController = UserDetailController()
+        present(userDetailController, animated: true)
+    }
+    
+    
+    
+    
+}

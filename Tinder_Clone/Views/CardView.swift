@@ -9,7 +9,23 @@
 import UIKit
 import SDWebImage
 
+protocol CardViewDelegate {
+    func didTapMoreInfo()
+}
+
 class CardView: UIView {
+    
+    var delegate: CardViewDelegate?
+    
+    fileprivate let moreInfoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "info")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleMoreInfo), for: .touchUpInside)
+        return button
+    }()
+    
+    
+    
     
     var cardViewModel: CardViewModel! {
         didSet {
@@ -69,8 +85,7 @@ class CardView: UIView {
             if let url = URL(string: imageUrl ?? "") {
                 self?.imageView.sd_setImage(with: url)
             }
-            
-            
+
             self?.barsStackView.arrangedSubviews.forEach({ (view) in
                 view.backgroundColor = self?.barDeselectedColor
             })
@@ -79,6 +94,20 @@ class CardView: UIView {
         }
     }
     
+    
+    //MARK: - Delegate to presentVC
+    @objc fileprivate func handleMoreInfo() {
+        delegate?.didTapMoreInfo()
+//        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+//        let userDetailController = UIViewController()
+//        userDetailController.view.backgroundColor = .yellow
+//        rootViewController?.present(userDetailController, animated: true)
+        //use delegate
+        
+    }
+    
+    
+    //MARK: - Layout
     fileprivate func setupLayout() {
         
         imageView.layer.cornerRadius = 15
@@ -100,7 +129,12 @@ class CardView: UIView {
                                 padding: .init(top: 0, left: 16, bottom: 16, right: 16))
         informationLabel.textColor = .white
         informationLabel.numberOfLines = 0
+        
+        addSubview(moreInfoButton)
+        moreInfoButton.anchor(top: nil, leading: nil, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 16, right: 16), size: .init(width: 44, height: 44))
     }
+    
+    
     
     fileprivate func setupBarsStackView() {
         addSubview(barsStackView)
@@ -120,6 +154,8 @@ class CardView: UIView {
         gradientLayer.cornerRadius = 15
         layer.addSublayer(gradientLayer)
     }
+    
+    
     
     override func layoutSubviews() {
         // here you CardView frame will be
