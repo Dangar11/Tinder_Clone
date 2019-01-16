@@ -12,6 +12,7 @@ class AgeRangeLabel: UILabel {
     override var intrinsicContentSize: CGSize {
         return .init(width: 80, height: 0)
     }
+    
 }
 
 class AgeRangeCell: UITableViewCell {
@@ -35,11 +36,13 @@ class AgeRangeCell: UITableViewCell {
     
     let minLabel: UILabel = {
         let label = AgeRangeLabel()
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         return label
     }()
     
     let maxLabel: UILabel = {
         let label = AgeRangeLabel()
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         return label
     }()
     

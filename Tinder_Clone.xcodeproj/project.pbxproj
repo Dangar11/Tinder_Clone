@@ -27,6 +27,7 @@
 		DD8DB01521E61D80000E7E5E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB01421E61D80000E7E5E /* User.swift */; };
 		DD8DB01921E628C8000E7E5E /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB01821E628C8000E7E5E /* CardViewModel.swift */; };
 		DD8DB01B21E62FC9000E7E5E /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB01A21E62FC9000E7E5E /* Advertiser.swift */; };
+		DDE1E15C21EF90CA00FF078C /* Firebase+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE1E15B21EF90CA00FF078C /* Firebase+Utils.swift */; };
 		DDE477D021EE7E9C0023BC4B /* AgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE477CF21EE7E9C0023BC4B /* AgeRangeCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		DD8DB01421E61D80000E7E5E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DD8DB01821E628C8000E7E5E /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		DD8DB01A21E62FC9000E7E5E /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
+		DDE1E15B21EF90CA00FF078C /* Firebase+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firebase+Utils.swift"; sourceTree = "<group>"; };
 		DDE477CF21EE7E9C0023BC4B /* AgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRangeCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				DD8DB00A21E509C0000E7E5E /* Extensions+UIView.swift */,
+				DDE1E15B21EF90CA00FF078C /* Firebase+Utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				DD8DB00B21E509C0000E7E5E /* Extensions+UIView.swift in Sources */,
 				DDE477D021EE7E9C0023BC4B /* AgeRangeCell.swift in Sources */,
 				DD8DB01921E628C8000E7E5E /* CardViewModel.swift in Sources */,
+				DDE1E15C21EF90CA00FF078C /* Firebase+Utils.swift in Sources */,
 				DD8DB01221E5202C000E7E5E /* CardView.swift in Sources */,
 				DD8DB01021E515D8000E7E5E /* TopNavigationStackView.swift in Sources */,
 				DD082C0D21ECCE6D00ABC240 /* SettingsController.swift in Sources */,

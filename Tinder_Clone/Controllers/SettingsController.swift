@@ -11,16 +11,19 @@ import Firebase
 import JGProgressHUD
 import SDWebImage
 
+protocol SettingsControllerDelegate {
+    func didSaveSettings()
+}
+
+
 class CustomImagePickerController: UIImagePickerController {
-    
     var imageButton: UIButton?
 }
 
 class SettingsController: UITableViewController {
 
     var user: User?
-    
-    
+    var delegate: SettingsControllerDelegate?
     
     lazy var header: UIView = {
         
@@ -101,22 +104,16 @@ class SettingsController: UITableViewController {
     
     fileprivate func fetchCurrestUser() {
        //fetch FireStore Data
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        Firestore.firestore().collection("users").document(uid).getDocument { [unowned self] (snapshot, error) in
+        Firestore.firestore().fetchCurrentUser { (user, error) in
             if let error = error {
-                print(error)
+                print("Failed to fetch user: ", error)
                 return
             }
-            
-            //fetched our user here
-            
-            guard let dictionary = snapshot?.data() else { return }
-            self.user = User(dictionary: dictionary)
+            self.user = user
             self.loadUserPhotos()
             self.tableView.reloadData()
-            
         }
-    }
+        }
     
     fileprivate func loadUserPhotos() {
         //call into the cach benefit load directly fron cach when already set in
@@ -193,7 +190,10 @@ class SettingsController: UITableViewController {
                 return
             }
             hud.dismiss()
-            print("Finished saving user info")
+            self.dismiss(animated: true, completion: {
+                self.delegate?.didSaveSettings()
+//                homeController.fetchCurrentUser() // I want to refetch my cards in homeController somehow
+            })
         }
     }
     
