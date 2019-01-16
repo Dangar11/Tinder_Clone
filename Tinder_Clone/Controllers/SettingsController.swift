@@ -85,7 +85,7 @@ class SettingsController: UITableViewController {
     var logoutButton: UIButton {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "logout")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
         return button
     }
     
@@ -94,13 +94,15 @@ class SettingsController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupNavigationItem()
         tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .interactive
         
+        setupNavigationItem()
         fetchCurrestUser()
     }
+    
+    
     
     fileprivate func fetchCurrestUser() {
        //fetch FireStore Data
@@ -165,6 +167,15 @@ class SettingsController: UITableViewController {
         dismiss(animated: true)
     }
     
+    @objc fileprivate func handleLogout() {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print("Error can't logout")
+        }
+        dismiss(animated: true)
+    }
+    
     
     @objc fileprivate func handleSave() {
         let hud = JGProgressHUD(style: .dark)
@@ -177,8 +188,8 @@ class SettingsController: UITableViewController {
             "imageUrl3": user?.imageUrl3 ?? "",
             "age": user?.age ?? 0,
             "profession": user?.profession ?? "",
-            "minSeekingAge": user?.minSeekingAge ?? -1,
-            "maxSeekingAge": user?.maxSeekingAge ?? -1
+            "minSeekingAge": user?.minSeekingAge ?? 18,
+            "maxSeekingAge": user?.maxSeekingAge ?? 35
         ]
         
         hud.textLabel.text = "Saving settings"
@@ -192,7 +203,6 @@ class SettingsController: UITableViewController {
             hud.dismiss()
             self.dismiss(animated: true, completion: {
                 self.delegate?.didSaveSettings()
-//                homeController.fetchCurrentUser() // I want to refetch my cards in homeController somehow
             })
         }
     }

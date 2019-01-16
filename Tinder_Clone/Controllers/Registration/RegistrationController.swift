@@ -11,24 +11,13 @@ import Firebase
 import JGProgressHUD
 
 
-extension RegistrationController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-       let image = info[.originalImage] as? UIImage
-        registrationViewModel.bindableImage.value = image
-        //registrationViewModel.image = image
-        dismiss(animated: true, completion: nil)
-    }
-}
+
 
 class RegistrationController: UIViewController {
 
+    //MARK: - Properties
     let registeringHUD = JGProgressHUD(style: .dark)
-    let gradienLayer = CAGradientLayer()
+    let gradientLayer = CAGradientLayer()
     let registrationViewModel = RegistrationViewModel()
     
     
@@ -52,8 +41,6 @@ class RegistrationController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Register", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        //button.backgroundColor = #colorLiteral(red: 0.8444415416, green: 0.1672765535, blue: 0.2078253552, alpha: 0.6591395548)
-        //button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .lightGray
         button.setTitleColor(.darkGray, for: .disabled)
         button.isEnabled = false
@@ -61,6 +48,16 @@ class RegistrationController: UIViewController {
         button.layer.cornerRadius = 22
         button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         
+        return button
+    }()
+    
+    
+    let goToLoginButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Log in", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return button
     }()
     
@@ -125,6 +122,8 @@ class RegistrationController: UIViewController {
     
     
     
+    
+    //MARK: - Bindable
     fileprivate func setupRegistrationViewModelObserver() {
     
         registrationViewModel.bindableIsFormValid.bind { [unowned self] (isFormValid) in
@@ -153,11 +152,9 @@ class RegistrationController: UIViewController {
         registrationViewModel.bindableImage.bind { [unowned self] (img) in
             self.selectPhotoButton.setImage(img?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
-//        registrationViewModel.imageObserver = { [unowned self] img in
-//            self.selectPhotoButton.setImage(img?.withRenderingMode(.alwaysOriginal), for: .normal)
-//        }
     }
     
+    //MARK: - Selectors
     @objc fileprivate func handleSelectPhoto() {
         let imagePickerController = UIImagePickerController()
         view.endEditing(true)
@@ -177,9 +174,15 @@ class RegistrationController: UIViewController {
             }
             print("Finished registering our user")
         }
-        
-        
     }
+    
+    
+    @objc fileprivate func handleLogin() {
+        let loginController = LoginController()
+        navigationController?.pushViewController(loginController, animated: true)
+    }
+    
+    
     
     fileprivate func showHUDWithEror(error: Error) {
         registeringHUD.dismiss()
@@ -198,17 +201,8 @@ class RegistrationController: UIViewController {
     }
     
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-       // NotificationCenter.default.removeObserver(self) // you'll have a retain cycle if you don't remove
-        
-    }
     
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        gradienLayer.frame = view.bounds
-    }
     
     
     //MARK: - UITextField Check for text
@@ -233,7 +227,6 @@ class RegistrationController: UIViewController {
     
     @objc fileprivate func handleTapDismiss() {
         self.view.endEditing(true) //dismiss keyboard
-        
         
     }
     
@@ -267,11 +260,6 @@ class RegistrationController: UIViewController {
 
     }
     
-    
-    
-    
-    //MARK: - Setup Layout
-    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if self.traitCollection.verticalSizeClass == .compact {
             overallStackView.axis = .horizontal
@@ -280,7 +268,11 @@ class RegistrationController: UIViewController {
         }
     }
     
+
+    //MARK: - Layout Setup
     fileprivate func setupLayout() {
+        navigationController?.isNavigationBarHidden = true
+        
         view.addSubview(overallStackView)
         
         overallStackView.axis = .horizontal
@@ -290,24 +282,48 @@ class RegistrationController: UIViewController {
         overallStackView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor,
                          padding: .init(top: 0, left: 50, bottom: 0, right: 50))
         overallStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        
+        view.addSubview(goToLoginButton)
+        goToLoginButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
     }
     
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        gradientLayer.frame = view.bounds
+    }
     
-    //MARK: - Setup Gradient
+
     fileprivate func setupGradientLayer() {
         let topColor = #colorLiteral(red: 0.07058823529, green: 0.7607843137, blue: 0.9137254902, alpha: 1)
         let middleColor = #colorLiteral(red: 0.768627451, green: 0.4431372549, blue: 0.9294117647, alpha: 1)
         let bottomColor = #colorLiteral(red: 0.9647058824, green: 0.3098039216, blue: 0.3490196078, alpha: 1)
         //make sure to use cgColor for gradient
-        gradienLayer.colors = [topColor.cgColor, middleColor.cgColor, bottomColor.cgColor]
-        gradienLayer.locations = [0.0, 0.4, 1.0]
+        gradientLayer.colors = [topColor.cgColor, middleColor.cgColor, bottomColor.cgColor]
+        gradientLayer.locations = [0.0, 0.4, 1.0]
         //horizontal gradient
         //gradienLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
         //gradienLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
-        view.layer.addSublayer(gradienLayer)
-        gradienLayer.frame = view.bounds
+        view.layer.addSublayer(gradientLayer)
+        gradientLayer.frame = view.bounds
     }
     
 
+}
+
+
+//MARK: ImagePicker
+extension RegistrationController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as? UIImage
+        registrationViewModel.bindableImage.value = image
+        //registrationViewModel.image = image
+        dismiss(animated: true, completion: nil)
+    }
 }
