@@ -170,8 +170,9 @@ extension HomeController: SettingsControllerDelegate, LoginControllerDelegate, C
         fetchCurrentUser()
     }
     
-    func didTapMoreInfo() {
+    func didTapMoreInfo(cardViewModel: CardViewModel) {
         let userDetailController = UserDetailController()
+        userDetailController.cardViewModel = cardViewModel
         present(userDetailController, animated: true)
     }
     

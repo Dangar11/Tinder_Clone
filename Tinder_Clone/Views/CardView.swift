@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 
 protocol CardViewDelegate {
-    func didTapMoreInfo()
+    func didTapMoreInfo(cardViewModel: CardViewModel)
 }
 
 class CardView: UIView {
@@ -30,7 +30,7 @@ class CardView: UIView {
     var cardViewModel: CardViewModel! {
         didSet {
             // accessing 0 index will crash use first an optional binding
-            let imageName = cardViewModel.imageNames.first ?? ""
+            let imageName = cardViewModel.imageUrls.first ?? ""
             
             //load our image using some kind of url
             if let url = URL(string: imageName) {
@@ -43,7 +43,7 @@ class CardView: UIView {
             
             //show bars only when 1 more images in card stack
             
-                (0..<cardViewModel.imageNames.count).forEach { (_) in
+                (0..<cardViewModel.imageUrls.count).forEach { (_) in
                     let barView = UIView()
                     barView.backgroundColor = barDeselectedColor
                     barsStackView.addArrangedSubview(barView)
@@ -97,13 +97,7 @@ class CardView: UIView {
     
     //MARK: - Delegate to presentVC
     @objc fileprivate func handleMoreInfo() {
-        delegate?.didTapMoreInfo()
-//        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
-//        let userDetailController = UIViewController()
-//        userDetailController.view.backgroundColor = .yellow
-//        rootViewController?.present(userDetailController, animated: true)
-        //use delegate
-        
+        delegate?.didTapMoreInfo(cardViewModel: self.cardViewModel)
     }
     
     

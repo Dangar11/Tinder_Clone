@@ -31,6 +31,7 @@
 		DDE1E16021EFA41700FF078C /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE1E15F21EFA41700FF078C /* LoginController.swift */; };
 		DDE1E16221EFA44000FF078C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE1E16121EFA44000FF078C /* LoginViewModel.swift */; };
 		DDE1E16521EFC9E100FF078C /* UserDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE1E16421EFC9E100FF078C /* UserDetailController.swift */; };
+		DDE1E16721F101D200FF078C /* SwipingPhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE1E16621F101D200FF078C /* SwipingPhotoController.swift */; };
 		DDE477D021EE7E9C0023BC4B /* AgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE477CF21EE7E9C0023BC4B /* AgeRangeCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		DDE1E15F21EFA41700FF078C /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		DDE1E16121EFA44000FF078C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		DDE1E16421EFC9E100FF078C /* UserDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailController.swift; sourceTree = "<group>"; };
+		DDE1E16621F101D200FF078C /* SwipingPhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotoController.swift; sourceTree = "<group>"; };
 		DDE477CF21EE7E9C0023BC4B /* AgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRangeCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -205,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				DDE1E16421EFC9E100FF078C /* UserDetailController.swift */,
+				DDE1E16621F101D200FF078C /* SwipingPhotoController.swift */,
 			);
 			path = "User Details";
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				DDE477D021EE7E9C0023BC4B /* AgeRangeCell.swift in Sources */,
 				DD8DB01921E628C8000E7E5E /* CardViewModel.swift in Sources */,
 				DDE1E15C21EF90CA00FF078C /* Firebase+Utils.swift in Sources */,
+				DDE1E16721F101D200FF078C /* SwipingPhotoController.swift in Sources */,
 				DD8DB01221E5202C000E7E5E /* CardView.swift in Sources */,
 				DD8DB01021E515D8000E7E5E /* TopNavigationStackView.swift in Sources */,
 				DD082C0D21ECCE6D00ABC240 /* SettingsController.swift in Sources */,
