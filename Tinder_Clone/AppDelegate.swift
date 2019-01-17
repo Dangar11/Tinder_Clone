@@ -31,8 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
-       // window?.rootViewController = HomeController()
-        window?.rootViewController = SwipingPhotoController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+        window?.rootViewController = HomeController()
+        
+//        window?.rootViewController = SwipingPhotoController(transitionStyle: .scroll, navigationOrientation: .horizontal)
         
         
         

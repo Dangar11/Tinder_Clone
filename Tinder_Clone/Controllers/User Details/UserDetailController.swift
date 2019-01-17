@@ -11,17 +11,21 @@ import SDWebImage
 
 class UserDetailController: UIViewController {
     
+    //MARK: - Properties
+    let extraSwipingHeight: CGFloat = 80 // constant for prevent images from chopping 
+    
+    
     
     var cardViewModel: CardViewModel! {
         didSet {
             infoLabel.attributedText = cardViewModel.attributedString
-            guard let firstImageUrl = cardViewModel.imageUrls.first,
-                let url = URL(string: firstImageUrl) else { return }
-            imageView.sd_setImage(with: url)
+            swipingPhotosController.cardViewModel = cardViewModel
         }
     }
     
     
+    
+    //MARK: - UI Components
     lazy var scrollView: UIScrollView = {
         let sv = UIScrollView()
         sv.backgroundColor = .white
@@ -31,12 +35,9 @@ class UserDetailController: UIViewController {
         return sv
     }()
     
-    let imageView: UIImageView = {
-        let iv = UIImageView(image: #imageLiteral(resourceName: "igor"))
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        return iv
-    }()
+
+    // swapController
+    let swipingPhotosController = SwipingPhotoController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     
     let infoLabel: UILabel = {
         let label = UILabel()
@@ -67,6 +68,7 @@ class UserDetailController: UIViewController {
         return button
     }
     
+    
     //MARK: - App lifecycle
     
     
@@ -80,14 +82,12 @@ class UserDetailController: UIViewController {
         
     }
     
-    
-    
-    @objc fileprivate func handleTapGesture() {
-        self.dismiss(animated: true)
-    }
+
 
     
     
+    
+    //MARK: - Setup UI
     fileprivate func setupVisualBlurEffectView() {
         let blurEffect = UIBlurEffect(style: .extraLight)
         let visualEffectView = UIVisualEffectView(effect: blurEffect)
@@ -112,20 +112,37 @@ class UserDetailController: UIViewController {
         view.addSubview(scrollView)
         scrollView.fillSuperview()
         
-        scrollView.addSubview(imageView)
-        scrollView.addSubview(infoLabel)
-        infoLabel.anchor(top: imageView.bottomAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: scrollView.trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 16))
         
-        //frame for scrollView behaviour
-        imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.width)
+        let swipingView = swipingPhotosController.view!
+        
+        scrollView.addSubview(swipingView)
+        scrollView.addSubview(infoLabel)
+        infoLabel.anchor(top: swipingView.bottomAnchor, leading: scrollView.leadingAnchor, bottom: nil, trailing: scrollView.trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 16))
+        
+
         
         scrollView.addSubview(dismissButton)
-        dismissButton.anchor(top: imageView.bottomAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: -25, left: 0, bottom: 0, right: 16), size: CGSize(width: 50, height: 50))
+        dismissButton.anchor(top: swipingView.bottomAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: -25, left: 0, bottom: 0, right: 16), size: CGSize(width: 50, height: 50))
     }
+    
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        let swipingView = swipingPhotosController.view!
+        //frame for scrollView behaviour
+        swipingView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.width + extraSwipingHeight)
+    }
+    
+    
     
     // MARK: - Selector
     @objc fileprivate func handleDislike() {
         print("Dislike")
+    }
+    
+    
+    @objc fileprivate func handleTapGesture() {
+        self.dismiss(animated: true)
     }
 
 }
@@ -135,12 +152,14 @@ class UserDetailController: UIViewController {
 extension UserDetailController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let imageView = swipingPhotosController.view!
         //scroll view gives down negative value
         let changeY = scrollView.contentOffset.y
         let changeYMin = min(0, changeY)
         let width = view.frame.width - changeYMin * 2
         //(-)-changeY gives us + that adds to view.frame.width
-        imageView.frame = CGRect(x: changeYMin, y: changeYMin, width: width, height: width)
+        imageView.frame = CGRect(x: changeYMin, y: changeYMin, width: width, height: width + extraSwipingHeight)
     }
     
     

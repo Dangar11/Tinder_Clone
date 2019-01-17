@@ -8,28 +8,62 @@
 
 import UIKit
 
-class SwipingPhotoController: UIPageViewController, UIPageViewControllerDataSource {
+class SwipingPhotoController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
 
     
-    let controllers = [
-    PhotoController(image: #imageLiteral(resourceName: "igor")),
-    PhotoController(image: #imageLiteral(resourceName: "tanya")),
-    PhotoController(image: #imageLiteral(resourceName: "tanya3")),
-    PhotoController(image: #imageLiteral(resourceName: "igor2")),
-    PhotoController(image: #imageLiteral(resourceName: "tanya2"))
-    ]
+    var controllers = [UIViewController]() //blank array
+    
+    
+    var cardViewModel: CardViewModel! {
+        didSet {
+            print(cardViewModel.attributedString)
+            controllers = cardViewModel.imageUrls.map({ (imageUrl) -> UIViewController in
+                let photoController = PhotoController(imageUrl: imageUrl)
+                return photoController
+            })
+            setViewControllers([controllers.first!], direction: .forward, animated: false)
+            
+            setupBarViews()
+        }
+    }
+    
+    
+    fileprivate let barsStackView = UIStackView(arrangedSubviews: [])
+    fileprivate let deselectBarColor = UIColor(white: 0, alpha: 0.3)
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .white
         dataSource = self
-
+        delegate = self
         
-        setViewControllers([controllers.first!], direction: .forward, animated: false)
     }
     
+    
+    
+    
+    fileprivate func setupBarViews()  {
+        
+        cardViewModel.imageUrls.forEach { (_) in
+            let barView = UIView()
+            barView.backgroundColor = deselectBarColor
+            barView.layer.cornerRadius = 2
+            barsStackView.addArrangedSubview(barView)
+        }
+        
+        let paddingTop = UIApplication.shared.statusBarFrame.height + 8
+        barsStackView.arrangedSubviews.first?.backgroundColor = .white
+        barsStackView.spacing = 4
+        barsStackView.distribution = .fillEqually
+        view.addSubview(barsStackView)
+        barsStackView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: paddingTop, left: 8, bottom:0, right: 8),
+                             size: .init(width: 0, height: 4))
+        
+    }
 
+    //MARK: - UIPageViewControllerDataSource
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         let index = self.controllers.firstIndex(where: { $0 == viewController }) ?? 0
         print(index)
@@ -44,22 +78,39 @@ class SwipingPhotoController: UIPageViewController, UIPageViewControllerDataSour
         if index == 0 { return nil}
         return controllers[index - 1]
     }
+    
+    
+    //MARK: - UIPageViewControllerDelegate
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        
+        let currentPhotoController = viewControllers?.first
+        if let index = controllers.firstIndex(where: {$0 == currentPhotoController}) {
+            barsStackView.arrangedSubviews.forEach({$0.backgroundColor = deselectBarColor})
+           barsStackView.arrangedSubviews[index].backgroundColor = .white
+        }
+        
+        print("Page transition completed")
+    }
+    
 
 }
 
 
+//Class with init for photo picker
 class PhotoController: UIViewController {
     
     let imageView = UIImageView(image: #imageLiteral(resourceName: "igor"))
     
+    //provide initializer that takes in url instead
     
-    init(image: UIImage) {
-        imageView.image = image
+    init(imageUrl: String) {
+        if let url = URL(string: imageUrl) {
+            imageView.sd_setImage(with: url)
+        }
         super.init(nibName: nil, bundle: nil)
     }
     
    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -67,6 +118,7 @@ class PhotoController: UIViewController {
         view.addSubview(imageView)
         imageView.fillSuperview()
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         
     }
     
