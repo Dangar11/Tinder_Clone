@@ -22,8 +22,13 @@ class CustomImagePickerController: UIImagePickerController {
 
 class SettingsController: UITableViewController {
 
+    static let defaultMinSeekingAge = 25
+    static let defaultMaxSeekingAge = 50
+    
     var user: User?
     var delegate: SettingsControllerDelegate?
+    
+    
     
     lazy var header: UIView = {
         
@@ -186,8 +191,8 @@ class SettingsController: UITableViewController {
             "imageUrl1": user?.imageUrl1 ?? "",
             "imageUrl2": user?.imageUrl2 ?? "",
             "imageUrl3": user?.imageUrl3 ?? "",
-            "age": user?.age ?? 0,
-            "profession": user?.profession ?? "",
+            "age": user?.age ?? 18,
+            "profession": user?.profession ?? "N\\A",
             "minSeekingAge": user?.minSeekingAge ?? 18,
             "maxSeekingAge": user?.maxSeekingAge ?? 35
         ]
@@ -296,12 +301,13 @@ extension SettingsController {
             ageRangeCell.minSlider.addTarget(self, action: #selector(handleMinAgeChange), for: .valueChanged)
             ageRangeCell.maxSlider.addTarget(self, action: #selector(handleMaxAgeChange), for: .valueChanged)
             // we need to set up the labels on our cell here
-            ageRangeCell.minLabel.text = "Min: \(user?.minSeekingAge ?? 25)"
-            ageRangeCell.maxLabel.text = "Max: \(user?.maxSeekingAge ?? 35)"
-            smileDetect(sliderValue: Int(user?.minSeekingAge ?? 25), slider: ageRangeCell.minSlider)
-            smileDetect(sliderValue: Int(user?.maxSeekingAge ?? 35), slider: ageRangeCell.maxSlider)
-            ageRangeCell.minSlider.value = 25
-            ageRangeCell.maxSlider.value = 35
+            let minAge = user?.minSeekingAge ?? SettingsController.defaultMinSeekingAge
+            let maxAge = user?.maxSeekingAge ?? SettingsController.defaultMaxSeekingAge
+            
+            ageRangeCell.minLabel.text = "Min: \(minAge)"
+            ageRangeCell.maxLabel.text = "Max: \(maxAge)"
+            smileDetect(sliderValue: minAge, slider: ageRangeCell.minSlider)
+            smileDetect(sliderValue: maxAge, slider: ageRangeCell.maxSlider)
             return ageRangeCell
         }
         
@@ -357,6 +363,7 @@ extension SettingsController {
         default :
             return
         }
+        slider.value = Float(sliderValue)
     }
     
     

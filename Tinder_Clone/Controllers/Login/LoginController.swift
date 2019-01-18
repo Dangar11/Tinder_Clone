@@ -17,11 +17,13 @@ protocol LoginControllerDelegate {
 class LoginController: UIViewController {
     
     var delegate: LoginControllerDelegate?
+    let registrationVC = RegistrationController()
     
     //MARK: Properties
     fileprivate let loginViewModel = LoginViewModel()
     fileprivate let loginHUD = JGProgressHUD(style: .dark)
     fileprivate let gradientLayer = CAGradientLayer()
+    
     
     
     //MARK: - UI Component
@@ -128,9 +130,13 @@ class LoginController: UIViewController {
         }
     }
     
+    deinit {
+        
+        print("deinit")
+    }
+    
     @objc fileprivate func handleBack() {
-        print("go back")
-        navigationController?.dismiss(animated: true)
+        navigationController?.pushViewController(registrationVC, animated: true)
     }
     
     

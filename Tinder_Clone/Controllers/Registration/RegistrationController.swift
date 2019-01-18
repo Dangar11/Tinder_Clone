@@ -20,6 +20,7 @@ class RegistrationController: UIViewController {
     let gradientLayer = CAGradientLayer()
     let registrationViewModel = RegistrationViewModel()
     
+    var delegate: LoginControllerDelegate?
     
     //MARK: - UI Components
     let selectPhotoButton: UIButton = {
@@ -173,12 +174,17 @@ class RegistrationController: UIViewController {
                 return
             }
             print("Finished registering our user")
+            
+            self.dismiss(animated: true, completion: {
+                self.delegate?.didFinishLogingIn()
+            })
         }
     }
     
     
     @objc fileprivate func handleLogin() {
         let loginController = LoginController()
+        loginController.delegate = delegate
         navigationController?.pushViewController(loginController, animated: true)
     }
     
