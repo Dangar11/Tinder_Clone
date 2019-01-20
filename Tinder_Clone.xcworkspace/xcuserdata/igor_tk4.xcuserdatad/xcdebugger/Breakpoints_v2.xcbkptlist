@@ -90,12 +90,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tinder_Clone/Controllers/HomeController.swift"
-            timestampString = "569674783.242842"
+            timestampString = "569719662.669576"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
-            landmarkName = "fetchUsersFromFirestore()"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
+            landmarkName = "fetchCurrentUser()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -106,12 +106,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tinder_Clone/Controllers/HomeController.swift"
-            timestampString = "569674783.243248"
+            timestampString = "569719662.67006"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
-            landmarkName = "fetchUsersFromFirestore()"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
+            landmarkName = "fetchCurrentUser()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -138,43 +138,59 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tinder_Clone/Controllers/HomeController.swift"
-            timestampString = "569674783.243549"
+            timestampString = "569719662.670422"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
             landmarkName = "saveSwipeToFirestore(didLike:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Tinder_Clone/Controllers/HomeController.swift"
+            timestampString = "569719662.670784"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
+            landmarkName = "fetchUsersFromFirestore()"
             landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Tinder_Clone.HomeController.(saveSwipeToFirestore in _66800C36867182B7478C461B03B58228)() -&gt; ()"
+                  symbolName = "closure #1 (__C.FIRQueryDocumentSnapshot) -&gt; () in closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Tinder_Clone.HomeController.(fetchUsersFromFirestore in _66800C36867182B7478C461B03B58228)() -&gt; ()"
                   moduleName = "Tinder_Clone"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/igor_tk4/Desktop/Tinder_Clone/Tinder_Clone/Controllers/HomeController.swift"
-                  timestampString = "569673025.312482"
+                  timestampString = "569717604.1471061"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "77"
-                  endingLineNumber = "77"
-                  offsetFromSymbolStart = "1004">
+                  startingLineNumber = "240"
+                  endingLineNumber = "240"
+                  offsetFromSymbolStart = "1431">
                </Location>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Tinder_Clone.HomeController.(saveSwipeToFirestore in _66800C36867182B7478C461B03B58228)() -&gt; ()"
+                  symbolName = "closure #1 (__C.FIRQueryDocumentSnapshot) -&gt; () in closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Tinder_Clone.HomeController.(fetchUsersFromFirestore in _66800C36867182B7478C461B03B58228)() -&gt; ()"
                   moduleName = "Tinder_Clone"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/igor_tk4/Desktop/Tinder_Clone/Tinder_Clone/Controllers/HomeController.swift"
-                  timestampString = "569673025.315093"
+                  timestampString = "569717604.148886"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "78"
-                  endingLineNumber = "78"
-                  offsetFromSymbolStart = "31">
+                  startingLineNumber = "240"
+                  endingLineNumber = "240"
+                  offsetFromSymbolStart = "1463">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -186,13 +202,77 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tinder_Clone/Controllers/HomeController.swift"
-            timestampString = "569674783.243807"
+            timestampString = "569719662.671149"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
-            landmarkName = "saveSwipeToFirestore(didLike:)"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
+            landmarkName = "fetchSwipes()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Tinder_Clone/Controllers/HomeController.swift"
+            timestampString = "569719662.671507"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
+            landmarkName = "fetchSwipes()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Tinder_Clone/Controllers/HomeController.swift"
+            timestampString = "569719662.6718121"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
+            landmarkName = "fetchSwipes()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Tinder_Clone.HomeController.(fetchSwipes in _66800C36867182B7478C461B03B58228)() -&gt; ()"
+                  moduleName = "Tinder_Clone"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igor_tk4/Desktop/Tinder_Clone/Tinder_Clone/Controllers/HomeController.swift"
+                  timestampString = "569718372.7878931"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "197"
+                  endingLineNumber = "197"
+                  offsetFromSymbolStart = "332">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRDocumentSnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Tinder_Clone.HomeController.(fetchSwipes in _66800C36867182B7478C461B03B58228)() -&gt; ()"
+                  moduleName = "Tinder_Clone"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/igor_tk4/Desktop/Tinder_Clone/Tinder_Clone/Controllers/HomeController.swift"
+                  timestampString = "569718372.789892"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "197"
+                  endingLineNumber = "197"
+                  offsetFromSymbolStart = "61">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

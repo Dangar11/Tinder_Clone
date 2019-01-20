@@ -13,6 +13,9 @@ import JGProgressHUD
 class HomeController: UIViewController {
     
     
+    var swipes = [String : Int]()
+    
+    
     fileprivate let hud = JGProgressHUD(style: .dark)
     fileprivate var user: User?
     fileprivate var topCardView: CardView?
@@ -37,7 +40,7 @@ class HomeController: UIViewController {
         bottomControls.dislikeButton.addTarget(self, action: #selector(handleDislike), for: .touchUpInside)
         setupLayout()
         fetchCurrentUser()
-        
+        fetchUsersFromFirestore()
         
     }
     
@@ -81,27 +84,51 @@ class HomeController: UIViewController {
             }
             if snapshot?.exists == true {
                 
-                Firestore.firestore().collection("swipes").document(uid).updateData(documentData) { (error) in
+                Firestore.firestore().collection("swipes").document(uid).updateData(documentData) { [unowned self] (error) in
                     if let error = error {
                         print("Failed to swipe data: ", error)
                     }
                     print("Successfully updated swiped...")
+                    self.checkIfMatchExists(cardUID: cardUID)
                 }
                 
             } else {
-                Firestore.firestore().collection("swipes").document(uid).setData(documentData) { (error) in
+                Firestore.firestore().collection("swipes").document(uid).setData(documentData) { [unowned self] (error) in
                     if let error = error {
                         print("Failed to save swipe data: ", error)
                         return
                     }
                     print("Successfully saved swiped like....")
+                    self.checkIfMatchExists(cardUID: cardUID)
                 }
             }
         }
-        
-        
-        
-        
+   
+    }
+    
+    
+    fileprivate func checkIfMatchExists(cardUID: String) {
+        //detect match between two users
+        print("Detecting match")
+        Firestore.firestore().collection("swipes").document(cardUID).getDocument { [unowned self](snapshot, error) in
+            if let error = error {
+                print("Failed to fetch document for card user: ", error)
+                return
+            }
+            
+            guard let data = snapshot?.data() else { return }
+            
+            
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            let hasMatches = data[uid] as? Int == 1
+            if hasMatches {
+                let hud = JGProgressHUD(style: .dark)
+                hud.textLabel.text = "Found a match"
+                hud.show(in: self.view)
+                hud.dismiss(afterDelay: 2)
+            }
+            
+        }
     }
     
     
@@ -156,8 +183,26 @@ class HomeController: UIViewController {
                 return
             }
             self.user = user
-            self.fetchUsersFromFirestore()
+            //self.fetchUsersFromFirestore()
+            
+            self.fetchSwipes()
             self.hud.dismiss()
+        }
+    }
+    
+    
+    
+    fileprivate func fetchSwipes() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        Firestore.firestore().collection("swipes").document(uid).getDocument { [unowned self] (snapshot, error) in
+            if let error = error {
+                print("Failed to fetch swipes info currently logged in user", error)
+                return
+            }
+            
+            guard let data = snapshot?.data() as? [String : Int] else { return }
+            self.swipes = data
+            self.fetchUsersFromFirestore()
         }
     }
     
@@ -189,7 +234,10 @@ class HomeController: UIViewController {
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
                 //Checking for me to exists in card flow and remove from stack of Card
-                if user.uid != Auth.auth().currentUser?.uid {
+                let isNotCurrentUser = user.uid != Auth.auth().currentUser?.uid
+                let hasNotSwipedBefore = self.swipes[user.uid!] == nil // not swiped before
+                //check if we like or dislike the user then not return them again!
+                if isNotCurrentUser && hasNotSwipedBefore  {
                     let cardView = self.setupCardFromUser(user: user)
                     
                     previousCardView?.nextCardView = cardView // nothing
