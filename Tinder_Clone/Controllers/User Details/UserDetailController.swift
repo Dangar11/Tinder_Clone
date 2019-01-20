@@ -37,7 +37,7 @@ class UserDetailController: UIViewController {
     
 
     // swapController
-    let swipingPhotosController = SwipingPhotoController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+    let swipingPhotosController = SwipingPhotoController()
     
     let infoLabel: UILabel = {
         let label = UILabel()

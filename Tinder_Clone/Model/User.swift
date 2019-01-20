@@ -47,6 +47,10 @@ struct User: ProducesCardViewModel {
         attributedText.append(NSAttributedString(string: "\n\(professionString)",
             attributes: [.font : UIFont.systemFont(ofSize: 20, weight: .regular)]))
         
+//        if imageUrl2?.isEmpty == false { imageUrls.append(imageUrl2!) }
+//        if imageUrl3?.isEmpty == false { imageUrls.append(imageUrl3!)}
+        
+        
         let imageUrls: [String] = [imageUrl1, imageUrl2, imageUrl3].compactMap { $0 }
         
         return CardViewModel(imageNames: imageUrls, attributedString: attributedText, textAligment: .left)

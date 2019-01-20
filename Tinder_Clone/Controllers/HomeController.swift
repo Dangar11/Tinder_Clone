@@ -15,6 +15,7 @@ class HomeController: UIViewController {
     
     fileprivate let hud = JGProgressHUD(style: .dark)
     fileprivate var user: User?
+    fileprivate var topCardView: CardView?
     
     let topStackView = TopNavigationStackView()
     let cardDeckView = UIView()
@@ -32,23 +33,25 @@ class HomeController: UIViewController {
         
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         bottomControls.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
+        bottomControls.likeButton.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
+        bottomControls.dislikeButton.addTarget(self, action: #selector(handleDislike), for: .touchUpInside)
         setupLayout()
         fetchCurrentUser()
         
+        
     }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        print("HomeController did appear")
+        // you want to kick the user out when they log out
         if Auth.auth().currentUser == nil {
-            let loginController = LoginController()
-            loginController.delegate = self
-            let navController = UINavigationController(rootViewController: loginController)
+            let registrationController = RegistrationController()
+            registrationController.delegate = self
+            let navController = UINavigationController(rootViewController: registrationController)
             present(navController, animated: true)
         }
-        print("HomeController did apear")
-        //kick when logout, check for existance or login
-        
-        
     }
     
     
@@ -66,13 +69,52 @@ class HomeController: UIViewController {
         fetchUsersFromFirestore()
     }
     
+    
+    @objc fileprivate func handleLike() {
+        
+        swipeAnimation(translation: 800, angle: 15)
+      
+    }
+    
+    @objc fileprivate func handleDislike() {
+        
+        swipeAnimation(translation: -800, angle: -15)
+    }
+    
+    
+    fileprivate func swipeAnimation(translation: CGFloat, angle: CGFloat) {
+        //CABasicAnimation for faster approach
+        let duration = 0.7
+        
+        let traslationAnimation = CABasicAnimation(keyPath: "position.x")
+        traslationAnimation.toValue = translation
+        traslationAnimation.duration = duration
+        traslationAnimation.fillMode = .forwards
+        traslationAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        traslationAnimation.isRemovedOnCompletion = false
+        
+        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+        rotationAnimation.toValue = angle * CGFloat.pi / 180
+        rotationAnimation.duration = duration
+        
+        let cardView = topCardView
+        topCardView = cardView?.nextCardView
+        
+        CATransaction.setCompletionBlock {
+            cardView?.removeFromSuperview()
+        }
+        cardView?.layer.add(traslationAnimation, forKey: "translation")
+        cardView?.layer.add(rotationAnimation, forKey: "rotation")
+        CATransaction.commit()
+    }
+    
     //Delegate
     //MARK: - Fetching
     fileprivate func fetchCurrentUser() {
         hud.textLabel.text = "Loading"
         hud.show(in: view)
         cardDeckView.subviews.forEach { $0.removeFromSuperview()}
-        Firestore.firestore().fetchCurrentUser { (user, error) in
+        Firestore.firestore().fetchCurrentUser { [unowned self] (user, error) in
             if let error = error {
                 print("Failed to fetch user:", error)
                 self.hud.dismiss()
@@ -95,32 +137,46 @@ class HomeController: UIViewController {
         
         //pagination 2 users at a time
         let query = Firestore.firestore().collection("users").whereField("age", isGreaterThanOrEqualTo: minAge).whereField("age", isLessThanOrEqualTo: maxAge)
+        topCardView = nil
         query.getDocuments { [unowned self] (snapshot, error) in
-            hud.dismiss()
+            self.hud.dismiss()
             if let error = error {
                 print("Failed to fetch users: ", error)
                 return
             }
             
-            snapshot?.documents.forEach({ (documentSnapshot) in
+            // set up the nextCardView(CardView) relationship for all cards
+            
+            //Linked List
+            var previousCardView: CardView?
+            
+            snapshot?.documents.forEach({ [unowned self] (documentSnapshot) in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
                 //Checking for me to exists in card flow and remove from stack of Card
                 if user.uid != Auth.auth().currentUser?.uid {
-                    self.setupCardFromUser(user: user)
+                    let cardView = self.setupCardFromUser(user: user)
+                    
+                    previousCardView?.nextCardView = cardView // nothing
+                    previousCardView = cardView // set to first card
+                    
+                    if self.topCardView == nil {
+                        self.topCardView = cardView
+                    }
                 }
-                
+                hud.dismiss()
             })
         }
     }
     
-    fileprivate func setupCardFromUser(user: User) {
+    fileprivate func setupCardFromUser(user: User) -> CardView {
         let cardView = CardView(frame: .zero)
         cardView.delegate = self
         cardView.cardViewModel = user.toCardViewModel()
         cardDeckView.addSubview(cardView)
         cardDeckView.sendSubviewToBack(cardView)
         cardView.fillSuperview()
+        return cardView
     }
 
     
@@ -176,6 +232,11 @@ extension HomeController: SettingsControllerDelegate, LoginControllerDelegate, C
         let userDetailController = UserDetailController()
         userDetailController.cardViewModel = cardViewModel
         present(userDetailController, animated: true)
+    }
+    
+    func didRemoveCard(cardView: CardView) {
+        self.topCardView?.removeFromSuperview()
+        self.topCardView = self.topCardView?.nextCardView
     }
     
     

@@ -59,7 +59,7 @@ class LoginController: UIViewController {
     
     let loginButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Login", for: .normal)
+        button.setTitle("Log in", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
         button.backgroundColor = .lightGray
@@ -123,17 +123,14 @@ class LoginController: UIViewController {
             }
             
             print("Logged in successfully")
-            self.dismiss(animated: true, completion: { [unowned self] in
+            self.dismiss(animated: true, completion: {
                 self.delegate?.didFinishLogingIn()
             })
             
         }
     }
     
-    deinit {
-        
-        print("deinit")
-    }
+    
     
     @objc fileprivate func handleBack() {
         navigationController?.pushViewController(registrationVC, animated: true)
