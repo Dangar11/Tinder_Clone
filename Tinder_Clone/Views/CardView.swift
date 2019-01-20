@@ -12,6 +12,8 @@ import SDWebImage
 protocol CardViewDelegate {
     func didTapMoreInfo(cardViewModel: CardViewModel)
     func didRemoveCard(cardView: CardView)
+    func didSaveLike(cardView: CardView)
+    func didSaveDislike(cardView: CardView)
 }
 
 class CardView: UIView {
@@ -89,9 +91,6 @@ class CardView: UIView {
     
     fileprivate func setupImageIndexObserver() {
         cardViewModel.imageIndexObserver = { [weak self] (index, imageUrl) in
-            if let url = URL(string: imageUrl ?? "") {
- //               self?.imageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "avatar_placeholder"), options: .continueInBackground)
-            }
 
             self?.barsStackView.arrangedSubviews.forEach({ (view) in
                 view.backgroundColor = self?.barDeselectedColor
@@ -214,9 +213,11 @@ class CardView: UIView {
         
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
             if shouldDismissRight {
+                self.delegate?.didSaveLike(cardView: self)
                 self.frame = CGRect(x: 800, y: 0, width: self.frame.width, height: self.frame.height)
 
             } else if shouldDismissLeft {
+                self.delegate?.didSaveDislike(cardView: self)
                 self.frame = CGRect(x: -800, y: 0, width: self.frame.width, height: self.frame.height)
             } else {
                 self.transform = .identity

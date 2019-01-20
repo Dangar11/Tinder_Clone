@@ -69,15 +69,50 @@ class HomeController: UIViewController {
         fetchUsersFromFirestore()
     }
     
+    fileprivate func saveSwipeToFirestore(didLike: Int) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let cardUID = topCardView?.cardViewModel.uid else { return }
+        let documentData = [cardUID: didLike]
+        
+        //Fetch the data to check if exists in a list then update new if not just set new data
+        Firestore.firestore().collection("swipes").document(uid).getDocument { (snapshot, error) in
+            if let error = error {
+                print("Failed to fetch swipe document: ", error)
+            }
+            if snapshot?.exists == true {
+                
+                Firestore.firestore().collection("swipes").document(uid).updateData(documentData) { (error) in
+                    if let error = error {
+                        print("Failed to swipe data: ", error)
+                    }
+                    print("Successfully updated swiped...")
+                }
+                
+            } else {
+                Firestore.firestore().collection("swipes").document(uid).setData(documentData) { (error) in
+                    if let error = error {
+                        print("Failed to save swipe data: ", error)
+                        return
+                    }
+                    print("Successfully saved swiped like....")
+                }
+            }
+        }
+        
+        
+        
+        
+    }
+    
     
     @objc fileprivate func handleLike() {
-        
+        saveSwipeToFirestore(didLike: 1)
         swipeAnimation(translation: 800, angle: 15)
       
     }
     
     @objc fileprivate func handleDislike() {
-        
+        saveSwipeToFirestore(didLike: 0)
         swipeAnimation(translation: -800, angle: -15)
     }
     
@@ -239,6 +274,13 @@ extension HomeController: SettingsControllerDelegate, LoginControllerDelegate, C
         self.topCardView = self.topCardView?.nextCardView
     }
     
+    func didSaveLike(cardView: CardView) {
+        saveSwipeToFirestore(didLike: 1)
+    }
+    
+    func didSaveDislike(cardView: CardView) {
+        saveSwipeToFirestore(didLike: 0)
+    }
     
     
     

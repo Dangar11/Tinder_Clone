@@ -31,7 +31,7 @@ struct User: ProducesCardViewModel {
         self.imageUrl1 = dictionary["imageUrl1"] as? String
         self.imageUrl2 = dictionary["imageUrl2"] as? String
         self.imageUrl3 = dictionary["imageUrl3"] as? String
-        self.uid = dictionary["uid"] as? String ?? ""
+        self.uid = dictionary["uuid"] as? String ?? ""
         self.minSeekingAge = dictionary["minSeekingAge"] as? Int
         self.maxSeekingAge = dictionary["maxSeekingAge"] as? Int
     }
@@ -53,7 +53,7 @@ struct User: ProducesCardViewModel {
         
         let imageUrls: [String] = [imageUrl1, imageUrl2, imageUrl3].compactMap { $0 }
         
-        return CardViewModel(imageNames: imageUrls, attributedString: attributedText, textAligment: .left)
+        return CardViewModel(uid: self.uid ?? "", imageNames: imageUrls, attributedString: attributedText, textAligment: .left)
     }
     
 }
