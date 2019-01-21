@@ -36,12 +36,7 @@ class CardView: UIView {
     var cardViewModel: CardViewModel! {
         didSet {
             // accessing 0 index will crash use first an optional binding
-            let imageName = cardViewModel.imageUrls.first ?? ""
             
-            //load our image using some kind of url
-//            if let url = URL(string: imageName) {
-//                imageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "avatar_placeholder"), options: .continueInBackground)
-//            }
             swipingPhotosController.cardViewModel = self.cardViewModel
             
             

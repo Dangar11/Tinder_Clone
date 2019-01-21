@@ -11,6 +11,8 @@
 		DD082C0D21ECCE6D00ABC240 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD082C0C21ECCE6D00ABC240 /* SettingsController.swift */; };
 		DD082C0F21ED3ECF00ABC240 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD082C0E21ED3ECF00ABC240 /* SettingsCell.swift */; };
 		DD35AE1C21F620B2005DD2D0 /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD35AE1B21F620B2005DD2D0 /* MatchView.swift */; };
+		DD35AE1E21F66058005DD2D0 /* SendMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD35AE1D21F66058005DD2D0 /* SendMessageButton.swift */; };
+		DD35AE2121F664CF005DD2D0 /* KeepSwipingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD35AE2021F664CF005DD2D0 /* KeepSwipingButton.swift */; };
 		DD81D91121E809AD0092B806 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD81D91021E809AD0092B806 /* GoogleService-Info.plist */; };
 		DD81D91321EA06130092B806 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD81D91221EA06130092B806 /* Bindable.swift */; };
 		DD87D7BD21E7A16E005FA9D2 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD87D7BC21E7A16E005FA9D2 /* RegistrationController.swift */; };
@@ -43,6 +45,8 @@
 		DD082C0C21ECCE6D00ABC240 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		DD082C0E21ED3ECF00ABC240 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		DD35AE1B21F620B2005DD2D0 /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MatchView.swift; path = Tinder_Clone/Views/MatchView.swift; sourceTree = SOURCE_ROOT; };
+		DD35AE1D21F66058005DD2D0 /* SendMessageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageButton.swift; sourceTree = "<group>"; };
+		DD35AE2021F664CF005DD2D0 /* KeepSwipingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepSwipingButton.swift; sourceTree = "<group>"; };
 		DD81D91021E809AD0092B806 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DD81D91221EA06130092B806 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		DD87D7BC21E7A16E005FA9D2 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
@@ -99,6 +103,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		DD35AE1F21F664B4005DD2D0 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				DD35AE1D21F66058005DD2D0 /* SendMessageButton.swift */,
+				DD35AE2021F664CF005DD2D0 /* KeepSwipingButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
 		DD8DAFEB21E504C5000E7E5E = {
 			isa = PBXGroup;
 			children = (
@@ -147,6 +160,7 @@
 		DD8DB00C21E50E9B000E7E5E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DD35AE1F21F664B4005DD2D0 /* Buttons */,
 				DD8DB00D21E50ED0000E7E5E /* HomeBottomControlsStackView.swift */,
 				DD8DB00F21E515D8000E7E5E /* TopNavigationStackView.swift */,
 				DD8DB01121E5202C000E7E5E /* CardView.swift */,
@@ -391,11 +405,13 @@
 				DDE1E15C21EF90CA00FF078C /* Firebase+Utils.swift in Sources */,
 				DDE1E16721F101D200FF078C /* SwipingPhotoController.swift in Sources */,
 				DD8DB01221E5202C000E7E5E /* CardView.swift in Sources */,
+				DD35AE1E21F66058005DD2D0 /* SendMessageButton.swift in Sources */,
 				DD8DB01021E515D8000E7E5E /* TopNavigationStackView.swift in Sources */,
 				DD082C0D21ECCE6D00ABC240 /* SettingsController.swift in Sources */,
 				DDE1E16021EFA41700FF078C /* LoginController.swift in Sources */,
 				DD87D7C121E7D215005FA9D2 /* RagistrationViewModel.swift in Sources */,
 				DD87D7BD21E7A16E005FA9D2 /* RegistrationController.swift in Sources */,
+				DD35AE2121F664CF005DD2D0 /* KeepSwipingButton.swift in Sources */,
 				DD8DB01521E61D80000E7E5E /* User.swift in Sources */,
 				DDE1E16221EFA44000FF078C /* LoginViewModel.swift in Sources */,
 				DD082C0F21ED3ECF00ABC240 /* SettingsCell.swift in Sources */,

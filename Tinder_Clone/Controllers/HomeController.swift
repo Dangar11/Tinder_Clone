@@ -13,6 +13,7 @@ import JGProgressHUD
 class HomeController: UIViewController {
     
     
+    
     var swipes = [String : Int]()
     
     
@@ -138,9 +139,7 @@ class HomeController: UIViewController {
         
         let minAge = user?.minSeekingAge ?? SettingsController.defaultMinSeekingAge
         let maxAge = user?.maxSeekingAge ?? SettingsController.defaultMaxSeekingAge
-        let hud = JGProgressHUD(style: .dark)
-        hud.textLabel.text = "Fetching Users"
-        hud.show(in: view)
+        
         
         //pagination 2 users at a time
         let query = Firestore.firestore().collection("users").whereField("age", isGreaterThanOrEqualTo: minAge).whereField("age", isLessThanOrEqualTo: maxAge)
@@ -175,7 +174,6 @@ class HomeController: UIViewController {
                         self.topCardView = cardView
                     }
                 }
-                hud.dismiss()
             })
         }
     }
@@ -195,6 +193,7 @@ class HomeController: UIViewController {
             guard let uid = Auth.auth().currentUser?.uid else { return }
             let hasMatches = data[uid] as? Int == 1
             if hasMatches {
+                print("Has matched")
                 self.presentMatchView(cardUID: cardUID)
 
             }
@@ -242,7 +241,7 @@ class HomeController: UIViewController {
     
     fileprivate func swipeAnimation(translation: CGFloat, angle: CGFloat) {
         //CABasicAnimation for faster approach
-        let duration = 0.7
+        let duration = 0.5
         
         let traslationAnimation = CABasicAnimation(keyPath: "position.x")
         traslationAnimation.toValue = translation
