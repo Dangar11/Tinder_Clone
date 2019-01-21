@@ -319,7 +319,7 @@ extension SettingsController {
         let indexPath = IndexPath(row: 0, section: 5)
         let ageRangeCell = tableView.cellForRow(at: indexPath) as! AgeRangeCell
         evaluateMinMax()
-        ageRangeCell.maxLabel.text = "Min: \(Int(slider.value))"
+        ageRangeCell.maxLabel.text = "Max: \(Int(slider.value))"
         self.user?.maxSeekingAge = Int(slider.value)
         smileDetect(sliderValue: Int(slider.value), slider: slider)
     }

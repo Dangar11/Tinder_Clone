@@ -40,7 +40,6 @@ class HomeController: UIViewController {
         bottomControls.dislikeButton.addTarget(self, action: #selector(handleDislike), for: .touchUpInside)
         setupLayout()
         fetchCurrentUser()
-        fetchUsersFromFirestore()
         
     }
     
@@ -57,24 +56,13 @@ class HomeController: UIViewController {
         }
     }
     
-    
-    //MARK: - Selectors
-    @objc fileprivate func handleSettings() {
-        let settingsController = SettingsController()
-        settingsController.delegate = self
-        let navController = UINavigationController(rootViewController: settingsController)
-        present(navController, animated: true)
-    }
-    
- 
-    
-    @objc fileprivate func handleRefresh() {
-        fetchUsersFromFirestore()
-    }
+
     
     fileprivate func saveSwipeToFirestore(didLike: Int) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let cardUID = topCardView?.cardViewModel.uid else { return }
+        
+        
         let documentData = [cardUID: didLike]
         
         //Fetch the data to check if exists in a list then update new if not just set new data
@@ -84,93 +72,33 @@ class HomeController: UIViewController {
             }
             if snapshot?.exists == true {
                 
-                Firestore.firestore().collection("swipes").document(uid).updateData(documentData) { [unowned self] (error) in
+                Firestore.firestore().collection("swipes").document(uid).updateData(documentData) { (error) in
                     if let error = error {
                         print("Failed to swipe data: ", error)
                     }
                     print("Successfully updated swiped...")
-                    self.checkIfMatchExists(cardUID: cardUID)
+                    if didLike == 1 {
+                        self.checkIfMatchExists(cardUID: cardUID)
+                    }
                 }
                 
             } else {
-                Firestore.firestore().collection("swipes").document(uid).setData(documentData) { [unowned self] (error) in
+                Firestore.firestore().collection("swipes").document(uid).setData(documentData) { (error) in
                     if let error = error {
                         print("Failed to save swipe data: ", error)
                         return
                     }
                     print("Successfully saved swiped like....")
-                    self.checkIfMatchExists(cardUID: cardUID)
+                    if didLike == 1 {
+                        self.checkIfMatchExists(cardUID: cardUID)
+                    }
+
                 }
             }
         }
    
     }
     
-    
-    fileprivate func checkIfMatchExists(cardUID: String) {
-        //detect match between two users
-        print("Detecting match")
-        Firestore.firestore().collection("swipes").document(cardUID).getDocument { [unowned self](snapshot, error) in
-            if let error = error {
-                print("Failed to fetch document for card user: ", error)
-                return
-            }
-            
-            guard let data = snapshot?.data() else { return }
-            
-            
-            guard let uid = Auth.auth().currentUser?.uid else { return }
-            let hasMatches = data[uid] as? Int == 1
-            if hasMatches {
-                let hud = JGProgressHUD(style: .dark)
-                hud.textLabel.text = "Found a match"
-                hud.show(in: self.view)
-                hud.dismiss(afterDelay: 2)
-            }
-            
-        }
-    }
-    
-    
-    @objc fileprivate func handleLike() {
-        saveSwipeToFirestore(didLike: 1)
-        swipeAnimation(translation: 800, angle: 15)
-      
-    }
-    
-    @objc fileprivate func handleDislike() {
-        saveSwipeToFirestore(didLike: 0)
-        swipeAnimation(translation: -800, angle: -15)
-    }
-    
-    
-    fileprivate func swipeAnimation(translation: CGFloat, angle: CGFloat) {
-        //CABasicAnimation for faster approach
-        let duration = 0.7
-        
-        let traslationAnimation = CABasicAnimation(keyPath: "position.x")
-        traslationAnimation.toValue = translation
-        traslationAnimation.duration = duration
-        traslationAnimation.fillMode = .forwards
-        traslationAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
-        traslationAnimation.isRemovedOnCompletion = false
-        
-        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
-        rotationAnimation.toValue = angle * CGFloat.pi / 180
-        rotationAnimation.duration = duration
-        
-        let cardView = topCardView
-        topCardView = cardView?.nextCardView
-        
-        CATransaction.setCompletionBlock {
-            cardView?.removeFromSuperview()
-        }
-        cardView?.layer.add(traslationAnimation, forKey: "translation")
-        cardView?.layer.add(rotationAnimation, forKey: "rotation")
-        CATransaction.commit()
-    }
-    
-    //Delegate
     //MARK: - Fetching
     fileprivate func fetchCurrentUser() {
         hud.textLabel.text = "Loading"
@@ -183,7 +111,6 @@ class HomeController: UIViewController {
                 return
             }
             self.user = user
-            //self.fetchUsersFromFirestore()
             
             self.fetchSwipes()
             self.hud.dismiss()
@@ -235,7 +162,8 @@ class HomeController: UIViewController {
                 let user = User(dictionary: userDictionary)
                 //Checking for me to exists in card flow and remove from stack of Card
                 let isNotCurrentUser = user.uid != Auth.auth().currentUser?.uid
-                let hasNotSwipedBefore = self.swipes[user.uid!] == nil // not swiped before
+                //let hasNotSwipedBefore = self.swipes[user.uid!] == nil // not swiped before
+                let hasNotSwipedBefore = true //hack for showing card
                 //check if we like or dislike the user then not return them again!
                 if isNotCurrentUser && hasNotSwipedBefore  {
                     let cardView = self.setupCardFromUser(user: user)
@@ -251,6 +179,93 @@ class HomeController: UIViewController {
             })
         }
     }
+    
+    
+    fileprivate func checkIfMatchExists(cardUID: String) {
+        //detect match between two users
+        Firestore.firestore().collection("swipes").document(cardUID).getDocument { [unowned self](snapshot, error) in
+            if let error = error {
+                print("Failed to fetch document for card user: ", error)
+                return
+            }
+            
+            guard let data = snapshot?.data() else { return }
+            
+            
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            let hasMatches = data[uid] as? Int == 1
+            if hasMatches {
+                self.presentMatchView(cardUID: cardUID)
+
+            }
+            
+        }
+    }
+    
+    fileprivate func presentMatchView(cardUID: String) {
+        let matchView = MatchView()
+        view.addSubview(matchView)
+        matchView.fillSuperview()
+    }
+    
+    
+    
+    //MARK: - Selectors
+    @objc fileprivate func handleSettings() {
+        let settingsController = SettingsController()
+        settingsController.delegate = self
+        let navController = UINavigationController(rootViewController: settingsController)
+        present(navController, animated: true)
+    }
+    
+    
+    
+    @objc fileprivate func handleRefresh() {
+        cardDeckView.subviews.forEach({ $0.removeFromSuperview() })
+        fetchUsersFromFirestore()
+    }
+    
+    
+    @objc fileprivate func handleLike() {
+        saveSwipeToFirestore(didLike: 1)
+        swipeAnimation(translation: 800, angle: 15)
+      
+    }
+    
+    @objc fileprivate func handleDislike() {
+        saveSwipeToFirestore(didLike: 0)
+        swipeAnimation(translation: -800, angle: -15)
+    }
+    
+ 
+    //MARK: - UI Present and Animation
+    
+    fileprivate func swipeAnimation(translation: CGFloat, angle: CGFloat) {
+        //CABasicAnimation for faster approach
+        let duration = 0.7
+        
+        let traslationAnimation = CABasicAnimation(keyPath: "position.x")
+        traslationAnimation.toValue = translation
+        traslationAnimation.duration = duration
+        traslationAnimation.fillMode = .forwards
+        traslationAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        traslationAnimation.isRemovedOnCompletion = false
+        
+        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+        rotationAnimation.toValue = angle * CGFloat.pi / 180
+        rotationAnimation.duration = duration
+        
+        let cardView = topCardView
+        topCardView = cardView?.nextCardView
+        
+        CATransaction.setCompletionBlock {
+            cardView?.removeFromSuperview()
+        }
+        cardView?.layer.add(traslationAnimation, forKey: "translation")
+        cardView?.layer.add(rotationAnimation, forKey: "rotation")
+        CATransaction.commit()
+    }
+    
     
     fileprivate func setupCardFromUser(user: User) -> CardView {
         let cardView = CardView(frame: .zero)

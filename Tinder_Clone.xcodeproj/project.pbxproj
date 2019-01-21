@@ -10,6 +10,7 @@
 		945F10716C73D918E63DA8D3 /* Pods_Tinder_Clone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 309C97177138D55E587CC2A1 /* Pods_Tinder_Clone.framework */; };
 		DD082C0D21ECCE6D00ABC240 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD082C0C21ECCE6D00ABC240 /* SettingsController.swift */; };
 		DD082C0F21ED3ECF00ABC240 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD082C0E21ED3ECF00ABC240 /* SettingsCell.swift */; };
+		DD35AE1C21F620B2005DD2D0 /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD35AE1B21F620B2005DD2D0 /* MatchView.swift */; };
 		DD81D91121E809AD0092B806 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD81D91021E809AD0092B806 /* GoogleService-Info.plist */; };
 		DD81D91321EA06130092B806 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD81D91221EA06130092B806 /* Bindable.swift */; };
 		DD87D7BD21E7A16E005FA9D2 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD87D7BC21E7A16E005FA9D2 /* RegistrationController.swift */; };
@@ -41,6 +42,7 @@
 		8F1236930C0CC2569C67C124 /* Pods-Tinder_Clone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tinder_Clone.debug.xcconfig"; path = "Target Support Files/Pods-Tinder_Clone/Pods-Tinder_Clone.debug.xcconfig"; sourceTree = "<group>"; };
 		DD082C0C21ECCE6D00ABC240 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		DD082C0E21ED3ECF00ABC240 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		DD35AE1B21F620B2005DD2D0 /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MatchView.swift; path = Tinder_Clone/Views/MatchView.swift; sourceTree = SOURCE_ROOT; };
 		DD81D91021E809AD0092B806 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DD81D91221EA06130092B806 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		DD87D7BC21E7A16E005FA9D2 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				DD87D7BE21E7A890005FA9D2 /* CustomTextField.swift */,
 				DD082C0E21ED3ECF00ABC240 /* SettingsCell.swift */,
 				DDE477CF21EE7E9C0023BC4B /* AgeRangeCell.swift */,
+				DD35AE1B21F620B2005DD2D0 /* MatchView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				DD8DB00B21E509C0000E7E5E /* Extensions+UIView.swift in Sources */,
 				DDE477D021EE7E9C0023BC4B /* AgeRangeCell.swift in Sources */,
 				DD8DB01921E628C8000E7E5E /* CardViewModel.swift in Sources */,
+				DD35AE1C21F620B2005DD2D0 /* MatchView.swift in Sources */,
 				DDE1E15C21EF90CA00FF078C /* Firebase+Utils.swift in Sources */,
 				DDE1E16721F101D200FF078C /* SwipingPhotoController.swift in Sources */,
 				DD8DB01221E5202C000E7E5E /* CardView.swift in Sources */,
