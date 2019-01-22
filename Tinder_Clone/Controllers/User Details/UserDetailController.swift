@@ -12,7 +12,7 @@ import SDWebImage
 class UserDetailController: UIViewController {
     
     //MARK: - Properties
-    let extraSwipingHeight: CGFloat = 80 // constant for prevent images from chopping 
+    let extraSwipingHeight: CGFloat = 25 // constant for prevent images from chopping
     
     
     
@@ -156,10 +156,17 @@ extension UserDetailController: UIScrollViewDelegate {
         let imageView = swipingPhotosController.view!
         //scroll view gives down negative value
         let changeY = scrollView.contentOffset.y
-        let changeYMin = min(0, changeY)
-        let width = view.frame.width - changeYMin * 2
-        //(-)-changeY gives us + that adds to view.frame.width
-        imageView.frame = CGRect(x: changeYMin, y: changeYMin, width: width, height: width + extraSwipingHeight)
+        print(changeY)
+        if changeY <= -100 {
+            scrollView.contentOffset.y = -100
+        } else {
+            let changeYMin = min(0, changeY)
+            let width = view.frame.width - changeYMin * 1.2
+            
+            //(-)-changeY gives us + that adds to view.frame.width
+            imageView.frame = CGRect(x: changeYMin, y: changeYMin, width: width + extraSwipingHeight, height: width + extraSwipingHeight)
+        }
+        
     }
     
     

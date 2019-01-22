@@ -45,7 +45,6 @@ class KeepSwipingButton: UIButton {
         clipsToBounds = true
         gradientLayer.frame = rect
         
-        
     }
 
 }
