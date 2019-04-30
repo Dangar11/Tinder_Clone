@@ -32,6 +32,7 @@ class LoginController: UIViewController {
         tf.placeholder = "Enter email"
         tf.backgroundColor = .white
         tf.keyboardType = .emailAddress
+        tf.autocapitalizationType = .none
         tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
@@ -41,6 +42,7 @@ class LoginController: UIViewController {
         tf.backgroundColor = .white
         tf.placeholder = "Enter password"
         tf.isSecureTextEntry = true
+        tf.autocapitalizationType = .none
         tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()

@@ -75,6 +75,7 @@ class RegistrationController: UIViewController {
         textField.placeholder = "Enter email"
         textField.backgroundColor = .white
         textField.keyboardType = .emailAddress
+        textField.autocapitalizationType = .none
         textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return textField
     }()
@@ -84,6 +85,7 @@ class RegistrationController: UIViewController {
         textField.placeholder = "Enter password"
         textField.backgroundColor = .white
         textField.isSecureTextEntry = true
+        textField.autocapitalizationType = .none
         textField.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return textField
     }()

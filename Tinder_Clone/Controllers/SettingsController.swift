@@ -24,6 +24,12 @@ class SettingsController: UITableViewController {
 
     static let defaultMinSeekingAge = 25
     static let defaultMaxSeekingAge = 50
+  
+  //instance properties
+  
+  lazy var image1Button = createButton(selector: #selector(handleSelectPhoto))
+  lazy var image2Button = createButton(selector: #selector(handleSelectPhoto))
+  lazy var image3Button = createButton(selector: #selector(handleSelectPhoto))
     
     var user: User?
     var delegate: SettingsControllerDelegate?
@@ -49,12 +55,7 @@ class SettingsController: UITableViewController {
         stackView.anchor(top: header.topAnchor, leading: image1Button.trailingAnchor, bottom: header.bottomAnchor, trailing: header.trailingAnchor, padding: .init(top: padding, left: padding, bottom: padding, right: padding))
         return header
     }()
-    
-    //instance properties
-    
-    lazy var image1Button = createButton(selector: #selector(handleSelectPhoto))
-    lazy var image2Button = createButton(selector: #selector(handleSelectPhoto))
-    lazy var image3Button = createButton(selector: #selector(handleSelectPhoto))
+  
     
     func createButton(selector: Selector) -> UIButton {
         let button = UIButton(type: .system)
