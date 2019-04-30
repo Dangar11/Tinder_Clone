@@ -1,23 +1,10 @@
 # Tinder_Clone
 Clone of Tinder App
 
-It's a clone AppStore app with all data fetching from AppStore API with custom animation all done in CODE💻without Storyboards
+It's a clone Tinder app with Firebase Auth and server identification image load to a server and all remote logic
 
--UICollectionView 
-
--JSON with URLSession
-
--REST
-
--SD_web for image loading with some caching
-
--UITableView
-
--GENERICS for network call  
-
--CLOSURES 
 
 
 FULL VIDEO CLICK⬇︎
 
-[![asciicast](https://i.imgur.com/pWjXBhc.jpg)](https://youtu.be/bxdU55x6y4g)
+[![asciicast](https://i.imgur.com/BGb4iOl.jpg)](https://youtu.be/8Zd2j478ZOg)
