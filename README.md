@@ -21,7 +21,7 @@ Clone of Tinder App build only in code without Storyboards!
 
 ## Register Screen
 ![](https://media.giphy.com/media/dC473DV1RC6iKuAF2V/giphy.gif)
-## User login and fetch others users
+## User login and fetch from Firebase others users
 ![](https://media.giphy.com/media/Y0hRVLB1HxBsjqovXN/giphy.gif)
 ## User settings, AgeRange filter and Info
 ![](https://media.giphy.com/media/YrYVqotnHHXTTSTQPw/giphy.gif)
