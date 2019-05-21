@@ -23,16 +23,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
      
-        
-        let db = Firestore.firestore()
-        let settings = db.settings
-        settings.areTimestampsInSnapshotsEnabled = true
-        db.settings = settings
-        
+        //No longer need with newer version of Firestore
+//        let db = Firestore.firestore()
+//        let settings = db.settings
+//        settings.areTimestampsInSnapshotsEnabled = true
+//        db.settings = settings
+      
         window = UIWindow()
         window?.makeKeyAndVisible()
         
-        window?.rootViewController = HomeController()
+        window?.rootViewController = UINavigationController(rootViewController: HomeController())
         
         
 //        window?.rootViewController = SwipingPhotoController(transitionStyle: .scroll, navigationOrientation: .horizontal)

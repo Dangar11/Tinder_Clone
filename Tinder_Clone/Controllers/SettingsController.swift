@@ -142,7 +142,7 @@ class SettingsController: UITableViewController {
     }
     
     func loadImage(at url: URL, in button: UIButton) {
-        SDWebImageManager.shared().loadImage(with: url, options: .continueInBackground, progress: nil) { (image, _, _, _, _, _) in
+      SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { (image, _, _, _, _, _) in
             button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
     }

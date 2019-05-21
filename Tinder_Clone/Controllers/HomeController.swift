@@ -32,13 +32,20 @@ class HomeController: UIViewController {
     
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
+      
+      //use to hide navigationbar at the top
+      //back button functionality is enable
+      navigationController?.navigationBar.isHidden = true
+      
+      
+      
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
+      topStackView.messageButton.addTarget(self, action: #selector(handleMessages), for: .touchUpInside)
         bottomControls.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
         bottomControls.likeButton.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
         bottomControls.dislikeButton.addTarget(self, action: #selector(handleDislike), for: .touchUpInside)
+      
         setupLayout()
         fetchCurrentUser()
         
@@ -47,7 +54,7 @@ class HomeController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("HomeController did appear")
+      print(#function)
         // you want to kick the user out when they log out
         if Auth.auth().currentUser == nil {
             let registrationController = RegistrationController()
@@ -213,6 +220,12 @@ class HomeController: UIViewController {
     
     
     //MARK: - Selectors
+  @objc fileprivate func handleMessages()  {
+    let vc = MatchesMessagesController(collectionViewLayout: UICollectionViewFlowLayout())
+    navigationController?.pushViewController(vc, animated: true)
+  }
+  
+  
     @objc fileprivate func handleSettings() {
         let settingsController = SettingsController()
         settingsController.delegate = self

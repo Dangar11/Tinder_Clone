@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1020"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4F3BF57112BCA472D6957CDB71FF8D23"
+               BlueprintIdentifier = "4303FA29C70B55AC3CCC46D0330420BA"
                BuildableName = "Pods_Tinder_Clone.framework"
                BlueprintName = "Pods-Tinder_Clone"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4F3BF57112BCA472D6957CDB71FF8D23"
+            BlueprintIdentifier = "4303FA29C70B55AC3CCC46D0330420BA"
             BuildableName = "Pods_Tinder_Clone.framework"
             BlueprintName = "Pods-Tinder_Clone"
             ReferencedContainer = "container:Pods.xcodeproj">

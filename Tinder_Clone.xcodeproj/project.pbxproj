@@ -23,13 +23,13 @@
 		DD8DAFFD21E504C5000E7E5E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD8DAFFB21E504C5000E7E5E /* Main.storyboard */; };
 		DD8DAFFF21E504C6000E7E5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD8DAFFE21E504C6000E7E5E /* Assets.xcassets */; };
 		DD8DB00221E504C6000E7E5E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD8DB00021E504C6000E7E5E /* LaunchScreen.storyboard */; };
-		DD8DB00B21E509C0000E7E5E /* Extensions+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB00A21E509C0000E7E5E /* Extensions+UIView.swift */; };
 		DD8DB00E21E50ED0000E7E5E /* HomeBottomControlsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB00D21E50ED0000E7E5E /* HomeBottomControlsStackView.swift */; };
 		DD8DB01021E515D8000E7E5E /* TopNavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB00F21E515D8000E7E5E /* TopNavigationStackView.swift */; };
 		DD8DB01221E5202C000E7E5E /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB01121E5202C000E7E5E /* CardView.swift */; };
 		DD8DB01521E61D80000E7E5E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB01421E61D80000E7E5E /* User.swift */; };
 		DD8DB01921E628C8000E7E5E /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB01821E628C8000E7E5E /* CardViewModel.swift */; };
 		DD8DB01B21E62FC9000E7E5E /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8DB01A21E62FC9000E7E5E /* Advertiser.swift */; };
+		DDB06EF9229418D7005207A8 /* MatchesMessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB06EF8229418D7005207A8 /* MatchesMessagesController.swift */; };
 		DDE1E15C21EF90CA00FF078C /* Firebase+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE1E15B21EF90CA00FF078C /* Firebase+Utils.swift */; };
 		DDE1E16021EFA41700FF078C /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE1E15F21EFA41700FF078C /* LoginController.swift */; };
 		DDE1E16221EFA44000FF078C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE1E16121EFA44000FF078C /* LoginViewModel.swift */; };
@@ -59,13 +59,13 @@
 		DD8DAFFE21E504C6000E7E5E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DD8DB00121E504C6000E7E5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DD8DB00321E504C6000E7E5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DD8DB00A21E509C0000E7E5E /* Extensions+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extensions+UIView.swift"; sourceTree = "<group>"; };
 		DD8DB00D21E50ED0000E7E5E /* HomeBottomControlsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomControlsStackView.swift; sourceTree = "<group>"; };
 		DD8DB00F21E515D8000E7E5E /* TopNavigationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
 		DD8DB01121E5202C000E7E5E /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		DD8DB01421E61D80000E7E5E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DD8DB01821E628C8000E7E5E /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		DD8DB01A21E62FC9000E7E5E /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
+		DDB06EF8229418D7005207A8 /* MatchesMessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesMessagesController.swift; sourceTree = "<group>"; };
 		DDE1E15B21EF90CA00FF078C /* Firebase+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firebase+Utils.swift"; sourceTree = "<group>"; };
 		DDE1E15F21EFA41700FF078C /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		DDE1E16121EFA44000FF078C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -151,7 +151,6 @@
 		DD8DB00921E50985000E7E5E /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DD8DB00A21E509C0000E7E5E /* Extensions+UIView.swift */,
 				DDE1E15B21EF90CA00FF078C /* Firebase+Utils.swift */,
 			);
 			path = Extensions;
@@ -184,6 +183,7 @@
 		DD8DB01621E627D3000E7E5E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				DDB06EF7229418B0005207A8 /* MathesMessages */,
 				DDE1E16321EFC9BA00FF078C /* User Details */,
 				DDE1E15E21EFA38C00FF078C /* Registration */,
 				DDE1E15D21EFA35700FF078C /* Login */,
@@ -200,6 +200,14 @@
 				DD8DB01821E628C8000E7E5E /* CardViewModel.swift */,
 			);
 			path = "View Models";
+			sourceTree = "<group>";
+		};
+		DDB06EF7229418B0005207A8 /* MathesMessages */ = {
+			isa = PBXGroup;
+			children = (
+				DDB06EF8229418D7005207A8 /* MatchesMessagesController.swift */,
+			);
+			path = MathesMessages;
 			sourceTree = "<group>";
 		};
 		DDE1E15D21EFA35700FF078C /* Login */ = {
@@ -241,7 +249,6 @@
 				DD8DAFF121E504C5000E7E5E /* Frameworks */,
 				DD8DAFF221E504C5000E7E5E /* Resources */,
 				924A3196071857AA65E06812 /* [CP] Embed Pods Frameworks */,
-				8022FE25EB3BF7F9CDC4EA21 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -323,28 +330,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8022FE25EB3BF7F9CDC4EA21 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Tinder_Clone/Pods-Tinder_Clone-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseFirestore/gRPCCertificates-Firestore.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates-Firestore.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Tinder_Clone/Pods-Tinder_Clone-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		924A3196071857AA65E06812 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -354,10 +339,11 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tinder_Clone/Pods-Tinder_Clone-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/LBTATools/LBTATools.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
@@ -369,10 +355,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LBTATools.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
@@ -399,11 +386,11 @@
 				DD8DB00E21E50ED0000E7E5E /* HomeBottomControlsStackView.swift in Sources */,
 				DD8DB01B21E62FC9000E7E5E /* Advertiser.swift in Sources */,
 				DD8DAFF821E504C5000E7E5E /* AppDelegate.swift in Sources */,
-				DD8DB00B21E509C0000E7E5E /* Extensions+UIView.swift in Sources */,
 				DDE477D021EE7E9C0023BC4B /* AgeRangeCell.swift in Sources */,
 				DD8DB01921E628C8000E7E5E /* CardViewModel.swift in Sources */,
 				DD35AE1C21F620B2005DD2D0 /* MatchView.swift in Sources */,
 				DDE1E15C21EF90CA00FF078C /* Firebase+Utils.swift in Sources */,
+				DDB06EF9229418D7005207A8 /* MatchesMessagesController.swift in Sources */,
 				DDE1E16721F101D200FF078C /* SwipingPhotoController.swift in Sources */,
 				DD8DB01221E5202C000E7E5E /* CardView.swift in Sources */,
 				DD35AE1E21F66058005DD2D0 /* SendMessageButton.swift in Sources */,
