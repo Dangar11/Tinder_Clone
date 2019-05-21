@@ -150,7 +150,7 @@ class SwipingPhotoController: UIPageViewController, UIPageViewControllerDataSour
 //Class with init for photo picker
 class PhotoController: UIViewController {
     
-    let imageView = UIImageView(image: #imageLiteral(resourceName: "igor"))
+    let imageView = UIImageView(image: #imageLiteral(resourceName: "avatar_placeholder"))
     
     //provide initializer that takes in url instead
     

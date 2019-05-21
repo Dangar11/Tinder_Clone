@@ -221,7 +221,7 @@ class HomeController: UIViewController {
     
     //MARK: - Selectors
   @objc fileprivate func handleMessages()  {
-    let vc = MatchesMessagesController(collectionViewLayout: UICollectionViewFlowLayout())
+    let vc = MatchesMessagesController()
     navigationController?.pushViewController(vc, animated: true)
   }
   
