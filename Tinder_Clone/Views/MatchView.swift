@@ -78,7 +78,7 @@ class MatchView: UIView {
     }()
     
     fileprivate let currentUserImageView: UIImageView = {
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "igor"))
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "avatar_placeholder"))
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 140 / 2
@@ -88,7 +88,7 @@ class MatchView: UIView {
     }()
     
     fileprivate let cardUserImageView: UIImageView = {
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "tanya2"))
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "avatar_placeholder"))
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 140 / 2
