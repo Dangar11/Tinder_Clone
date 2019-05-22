@@ -33,6 +33,10 @@
 		DDB06EFC22942A6C005207A8 /* MathesNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB06EFB22942A6C005207A8 /* MathesNavBar.swift */; };
 		DDB06EFE22942EFF005207A8 /* MatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB06EFD22942EFF005207A8 /* MatchCell.swift */; };
 		DDB06F082295052E005207A8 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB06F072295052E005207A8 /* Match.swift */; };
+		DDB06F0A22956D11005207A8 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB06F0922956D11005207A8 /* ChatLogController.swift */; };
+		DDB06F0C22956D4F005207A8 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB06F0B22956D4F005207A8 /* Messages.swift */; };
+		DDB06F0E22956D89005207A8 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB06F0D22956D89005207A8 /* MessageCell.swift */; };
+		DDB06F1022956ED7005207A8 /* MessagesNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB06F0F22956ED7005207A8 /* MessagesNavBar.swift */; };
 		DDE1E15C21EF90CA00FF078C /* Firebase+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE1E15B21EF90CA00FF078C /* Firebase+Utils.swift */; };
 		DDE1E16021EFA41700FF078C /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE1E15F21EFA41700FF078C /* LoginController.swift */; };
 		DDE1E16221EFA44000FF078C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE1E16121EFA44000FF078C /* LoginViewModel.swift */; };
@@ -72,6 +76,10 @@
 		DDB06EFB22942A6C005207A8 /* MathesNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathesNavBar.swift; sourceTree = "<group>"; };
 		DDB06EFD22942EFF005207A8 /* MatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCell.swift; sourceTree = "<group>"; };
 		DDB06F072295052E005207A8 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
+		DDB06F0922956D11005207A8 /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
+		DDB06F0B22956D4F005207A8 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
+		DDB06F0D22956D89005207A8 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		DDB06F0F22956ED7005207A8 /* MessagesNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesNavBar.swift; sourceTree = "<group>"; };
 		DDE1E15B21EF90CA00FF078C /* Firebase+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firebase+Utils.swift"; sourceTree = "<group>"; };
 		DDE1E15F21EFA41700FF078C /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		DDE1E16121EFA44000FF078C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -184,6 +192,7 @@
 				DD8DB01421E61D80000E7E5E /* User.swift */,
 				DD8DB01A21E62FC9000E7E5E /* Advertiser.swift */,
 				DDB06F072295052E005207A8 /* Match.swift */,
+				DDB06F0B22956D4F005207A8 /* Messages.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -214,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				DDB06EF8229418D7005207A8 /* MatchesMessagesController.swift */,
+				DDB06F0922956D11005207A8 /* ChatLogController.swift */,
 			);
 			path = MathesMessages;
 			sourceTree = "<group>";
@@ -223,6 +233,8 @@
 			children = (
 				DDB06EFB22942A6C005207A8 /* MathesNavBar.swift */,
 				DDB06EFD22942EFF005207A8 /* MatchCell.swift */,
+				DDB06F0D22956D89005207A8 /* MessageCell.swift */,
+				DDB06F0F22956ED7005207A8 /* MessagesNavBar.swift */,
 			);
 			path = MatchesMessages;
 			sourceTree = "<group>";
@@ -400,18 +412,21 @@
 				DD8DAFFA21E504C5000E7E5E /* HomeController.swift in Sources */,
 				DD87D7BF21E7A890005FA9D2 /* CustomTextField.swift in Sources */,
 				DDB06EFC22942A6C005207A8 /* MathesNavBar.swift in Sources */,
+				DDB06F0C22956D4F005207A8 /* Messages.swift in Sources */,
 				DDE1E16521EFC9E100FF078C /* UserDetailController.swift in Sources */,
 				DDB06EFE22942EFF005207A8 /* MatchCell.swift in Sources */,
 				DD8DB00E21E50ED0000E7E5E /* HomeBottomControlsStackView.swift in Sources */,
 				DD8DB01B21E62FC9000E7E5E /* Advertiser.swift in Sources */,
 				DD8DAFF821E504C5000E7E5E /* AppDelegate.swift in Sources */,
 				DDE477D021EE7E9C0023BC4B /* AgeRangeCell.swift in Sources */,
+				DDB06F0E22956D89005207A8 /* MessageCell.swift in Sources */,
 				DD8DB01921E628C8000E7E5E /* CardViewModel.swift in Sources */,
 				DDB06F082295052E005207A8 /* Match.swift in Sources */,
 				DD35AE1C21F620B2005DD2D0 /* MatchView.swift in Sources */,
 				DDE1E15C21EF90CA00FF078C /* Firebase+Utils.swift in Sources */,
 				DDB06EF9229418D7005207A8 /* MatchesMessagesController.swift in Sources */,
 				DDE1E16721F101D200FF078C /* SwipingPhotoController.swift in Sources */,
+				DDB06F1022956ED7005207A8 /* MessagesNavBar.swift in Sources */,
 				DD8DB01221E5202C000E7E5E /* CardView.swift in Sources */,
 				DD35AE1E21F66058005DD2D0 /* SendMessageButton.swift in Sources */,
 				DD8DB01021E515D8000E7E5E /* TopNavigationStackView.swift in Sources */,
@@ -420,6 +435,7 @@
 				DD87D7C121E7D215005FA9D2 /* RagistrationViewModel.swift in Sources */,
 				DD87D7BD21E7A16E005FA9D2 /* RegistrationController.swift in Sources */,
 				DD35AE2121F664CF005DD2D0 /* KeepSwipingButton.swift in Sources */,
+				DDB06F0A22956D11005207A8 /* ChatLogController.swift in Sources */,
 				DD8DB01521E61D80000E7E5E /* User.swift in Sources */,
 				DDE1E16221EFA44000FF078C /* LoginViewModel.swift in Sources */,
 				DD082C0F21ED3ECF00ABC240 /* SettingsCell.swift in Sources */,

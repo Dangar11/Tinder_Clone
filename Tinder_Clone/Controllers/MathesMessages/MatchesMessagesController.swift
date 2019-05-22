@@ -21,6 +21,7 @@ class MatchesMessagesController: LBTAListController<MatchCell, Match> {
     
     fetchMatches()
     
+    //Custom navigation bar
     customNavBar.backButton.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
     view.addSubview(customNavBar)
     customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: 0, height: 150))
@@ -56,6 +57,13 @@ class MatchesMessagesController: LBTAListController<MatchCell, Match> {
       self.items = mathes
       self.collectionView.reloadData()
     }
+  }
+  
+  
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let match = items[indexPath.item]
+    let chatLogController = ChatLogController(match: match)
+    navigationController?.pushViewController(chatLogController, animated: true)
   }
   
 }
