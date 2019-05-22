@@ -8,15 +8,16 @@
 
 import LBTATools
 
-class MatchCell: LBTAListCell<UIColor>  {
+class MatchCell: LBTAListCell<Match>  {
   
   
   let profileImageView = UIImageView(image: #imageLiteral(resourceName: "avatar_placeholder"), contentMode: .scaleAspectFill)
-  let userNameLabel = UILabel(text: "UserName Here", font: .systemFont(ofSize: 14, weight: .semibold), textColor: #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) , textAlignment: .center)
+  let userNameLabel = UILabel(text: "UserName Here", font: .systemFont(ofSize: 14, weight: .semibold), textColor: #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) , textAlignment: .center, numberOfLines: 0)
   
-  override var item: UIColor! {
+  override var item: Match! {
     didSet {
-      backgroundColor = item
+      userNameLabel.text = item.name
+      profileImageView.sd_setImage(with: URL(string: item.profileImageUrl))
     }
   }
   

@@ -15,7 +15,9 @@ class HomeController: UIViewController {
     
     
     var swipes = [String : Int]()
-    
+  
+    //Save users for matches massages screen
+    var users = [String: User]()
     
     fileprivate let hud = JGProgressHUD(style: .dark)
     fileprivate var user: User?
@@ -149,7 +151,7 @@ class HomeController: UIViewController {
         
         
         //pagination 2 users at a time
-        let query = Firestore.firestore().collection("users").whereField("age", isGreaterThanOrEqualTo: minAge).whereField("age", isLessThanOrEqualTo: maxAge)
+        let query = Firestore.firestore().collection("users").whereField("age", isGreaterThanOrEqualTo: minAge).whereField("age", isLessThanOrEqualTo: maxAge).limit(to: 10)
         topCardView = nil
         query.getDocuments { [unowned self] (snapshot, error) in
             self.hud.dismiss()
@@ -166,9 +168,11 @@ class HomeController: UIViewController {
             snapshot?.documents.forEach({ [unowned self] (documentSnapshot) in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
+              
+                self.users[user.uid ?? ""] = user
+              
                 //Checking for me to exists in card flow and remove from stack of Card
                 let isNotCurrentUser = user.uid != Auth.auth().currentUser?.uid
-                //let hasNotSwipedBefore = self.swipes[user.uid!] == nil // not swiped before
                 let hasNotSwipedBefore = true //hack for showing card
                 //check if we like or dislike the user then not return them again!
                 if isNotCurrentUser && hasNotSwipedBefore  {
@@ -202,12 +206,48 @@ class HomeController: UIViewController {
             if hasMatches {
                 print("Has matched")
                 self.presentMatchView(cardUID: cardUID)
-                
-
+              
+              //CardUser Mathes
+              self.messageMatchesCardUser(cardUID: cardUID, uid: uid)
+              //CurrentUser Mathes
+              self.messageMathesCurrentUser(cardUID: cardUID, uid: uid)
+              
             }
             
         }
     }
+  
+  //Mathes for card user saving
+  func messageMatchesCardUser(cardUID: String, uid: String) {
+    
+    guard let cardUser = self.users[cardUID] else { return }
+    guard let name = cardUser.name, let image = cardUser.imageUrl1 else { return }
+    
+    //MARK: Matches Message create and save matches
+    let data = ["name" : name, "profileImageUrl" : image, "uid" : cardUID, "timestamp": Timestamp(date: Date())] as [String : Any]
+    
+    Firestore.firestore().collection("matches_messages").document(uid).collection("matches").document(cardUID).setData(data, completion: { (error) in
+      if let error = error {
+        print(error)
+      }
+    })
+  }
+  
+  //Mathes for current user saving
+  func messageMathesCurrentUser(cardUID:String, uid: String) {
+    
+    guard let currentUser = self.user else { return }
+    guard let currentUsername = currentUser.name, let currentUserImage = currentUser.imageUrl1 else { return }
+    
+    //MARK: Matches Message create and save matches
+    let currentUserData = ["name" : currentUsername, "profileImageUrl" : currentUserImage, "uid" : cardUID, "timestamp": Timestamp(date: Date())] as [String : Any]
+    Firestore.firestore().collection("matches_messages").document(cardUID).collection("matches").document(uid).setData(currentUserData, completion: { (error) in
+      if let error = error {
+        print(error)
+      }
+    })
+    
+  }
     
     fileprivate func presentMatchView(cardUID: String) {
         let matchView = MatchView()
@@ -337,7 +377,6 @@ extension HomeController: SettingsControllerDelegate, LoginControllerDelegate, C
     }
     
     func didSaveSettings() {
-        print("Notified of dismisal from SettingsController in HomeController")
         fetchCurrentUser()
     }
     

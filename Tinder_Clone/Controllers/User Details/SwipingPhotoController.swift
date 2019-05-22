@@ -27,7 +27,6 @@ class SwipingPhotoController: UIPageViewController, UIPageViewControllerDataSour
     
     var cardViewModel: CardViewModel! {
         didSet {
-            print(cardViewModel.attributedString)
             controllers = cardViewModel.imageUrls.map({ (imageUrl) -> UIViewController in
                 let photoController = PhotoController(imageUrl: imageUrl)
                 return photoController
@@ -67,7 +66,6 @@ class SwipingPhotoController: UIPageViewController, UIPageViewControllerDataSour
     }
     
     @objc fileprivate func handleTap(gesture: UIGestureRecognizer) {
-        print("Cycle through photo")
         let currentController = viewControllers!.first!
         if let index = controllers.firstIndex(of: currentController) {
             
@@ -117,7 +115,6 @@ class SwipingPhotoController: UIPageViewController, UIPageViewControllerDataSour
     //MARK: - UIPageViewControllerDataSource
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         let index = self.controllers.firstIndex(where: { $0 == viewController }) ?? 0
-        print(index)
         if index == controllers.count - 1 { return nil }
         return controllers[index + 1]
         
@@ -125,7 +122,6 @@ class SwipingPhotoController: UIPageViewController, UIPageViewControllerDataSour
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         let index = self.controllers.firstIndex(where: { $0 == viewController }) ?? 0
-        print(index)
         if index == 0 { return nil}
         return controllers[index - 1]
     }
@@ -139,8 +135,6 @@ class SwipingPhotoController: UIPageViewController, UIPageViewControllerDataSour
             barsStackView.arrangedSubviews.forEach({$0.backgroundColor = deselectBarColor})
            barsStackView.arrangedSubviews[index].backgroundColor = .white
         }
-        
-        print("Page transition completed")
     }
     
 
