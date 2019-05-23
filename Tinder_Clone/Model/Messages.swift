@@ -11,4 +11,5 @@ import Foundation
 
 struct Messages {
   let text: String
+  let messageFromLoggedUser: Bool
 }

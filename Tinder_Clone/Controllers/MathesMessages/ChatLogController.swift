@@ -11,6 +11,7 @@ import LBTATools
 
 class ChatLogController: LBTAListController<MessageCell, Messages> {
   
+  
   fileprivate lazy var customNavBar = MessageNavBar(match: match)
   
   fileprivate let navBarHeight: CGFloat = 100
@@ -25,21 +26,32 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
  
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    collectionView.alwaysBounceVertical = true
     items = [
-      .init(text: "Hello from the Tinder Course"),
-      .init(text: "Hello from the Tinder Course"),
-      .init(text: "Hello from the Tinder Course"),
-      .init(text: "Hello from the Tinder Course"),
-      .init(text: "Hello from the Tinder Course")
+      .init(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", messageFromLoggedUser: true),
+      .init(text: "Hello from the Tinder Course", messageFromLoggedUser: false),
+      .init(text: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.", messageFromLoggedUser: true),
+      .init(text: "Hello from the Tinder Course", messageFromLoggedUser: false),
+      .init(text: "Hello from the Tinder Course", messageFromLoggedUser: false)
     ]
     
     collectionView.backgroundColor = .white
     
+    //Custom NavBar
     customNavBar.backButton.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
     view.addSubview(customNavBar)
     customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: 0, height: navBarHeight))
     
+    
     collectionView.contentInset.top = navBarHeight
+    //indicator for scrolling starts at navBarHeight
+    collectionView.scrollIndicatorInsets.top = navBarHeight
+    
+    //Status bar cover for see throught the NavBar
+    let statusBarCover = UIView(backgroundColor: .white)
+    view.addSubview(statusBarCover)
+    statusBarCover.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor)
   }
   
   
@@ -61,7 +73,17 @@ extension ChatLogController: UICollectionViewDelegateFlowLayout {
   
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return .init(width: view.frame.width, height: 100)
+    
+    // estimated sizing for autoSizing cell
+    let estimatedSizeCell = MessageCell(frame: .init(x: 0, y: 0, width: view.frame.width, height: 1000))
+    
+    estimatedSizeCell.item = self.items[indexPath.item]
+    
+    estimatedSizeCell.layoutIfNeeded()
+    
+    let estimatedSize = estimatedSizeCell.systemLayoutSizeFitting(.init(width: view.frame.width, height: 1000))
+    
+    return .init(width: view.frame.width, height: estimatedSize.height)
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

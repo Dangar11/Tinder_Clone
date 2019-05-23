@@ -42,9 +42,9 @@ class MessageNavBar: UIView {
       stack(userProfileImageView, userNameLabel, spacing: 8, alignment: .center),
       alignment: .center)
     
-    hstack(backButton,
+    hstack(backButton.withWidth(50),
            middleStack,
-           flagButton).withMargins(.init(top: 0, left: 12, bottom: 0, right: 12))
+           flagButton).withMargins(.init(top: 0, left: 4, bottom: 0, right: 12))
     
   }
   
