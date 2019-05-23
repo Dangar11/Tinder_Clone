@@ -23,11 +23,32 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
     super.init()
   }
   
- 
+  // Accessory view for input
+  
+  
+  
+  lazy var redView: UIView = {
+    let redView = CustomInputAccessoryView(frame: .init(x: 0, y: 0, width: view.frame.width, height: 50))
+    return redView
+  }()
+  
+  override var inputAccessoryView: UIView? {
+    get {
+      return redView
+    }
+  }
+  
+  override var canBecomeFirstResponder: Bool {
+    return true
+  }
+  
+  
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    collectionView.alwaysBounceVertical = true
+    collectionView.keyboardDismissMode = .interactive
+    
     items = [
       .init(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", messageFromLoggedUser: true),
       .init(text: "Hello from the Tinder Course", messageFromLoggedUser: false),
@@ -36,6 +57,14 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
       .init(text: "Hello from the Tinder Course", messageFromLoggedUser: false)
     ]
     
+    
+    setupUI()
+  }
+  
+  
+  
+  fileprivate func setupUI() {
+    collectionView.alwaysBounceVertical = true
     collectionView.backgroundColor = .white
     
     //Custom NavBar
@@ -90,4 +119,17 @@ extension ChatLogController: UICollectionViewDelegateFlowLayout {
     return .init(top: 16, left: 0, bottom: 16, right: 0)
   }
   
+}
+
+//Keyboard dissmiss tapping on the bubble
+extension UIViewController {
+  func hideKeyboardWhenTappedAround() {
+    let tapGesture = UITapGestureRecognizer(target: self,
+                                            action: #selector(hideKeyboard))
+    view.addGestureRecognizer(tapGesture)
+  }
+  
+  @objc func hideKeyboard() {
+    view.endEditing(true)
+  }
 }
