@@ -237,10 +237,12 @@ class HomeController: UIViewController {
   func messageMathesCurrentUser(cardUID:String, uid: String) {
     
     guard let currentUser = self.user else { return }
-    guard let currentUsername = currentUser.name, let currentUserImage = currentUser.imageUrl1 else { return }
+    guard let currentUsername = currentUser.name, let currentUserImage = currentUser.imageUrl1,
+    let curentUserID = currentUser.uid else { return }
+    
     
     //MARK: Matches Message create and save matches
-    let currentUserData = ["name" : currentUsername, "profileImageUrl" : currentUserImage, "uid" : cardUID, "timestamp": Timestamp(date: Date())] as [String : Any]
+    let currentUserData = ["name" : currentUsername, "profileImageUrl" : currentUserImage, "uid" : curentUserID, "timestamp": Timestamp(date: Date())] as [String : Any]
     Firestore.firestore().collection("matches_messages").document(cardUID).collection("matches").document(uid).setData(currentUserData, completion: { (error) in
       if let error = error {
         print(error)
