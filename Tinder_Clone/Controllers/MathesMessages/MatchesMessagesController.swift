@@ -110,6 +110,18 @@ class MatchesMessagesController: LBTAListHeaderController<RecentMessageCell, Rec
     navigationController?.pushViewController(chatLogController, animated: true)
   }
   
+  
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let recentMessage = self.items[indexPath.item]
+    //transform recentMessage into a match
+    let dictionary = ["name" : recentMessage.name,
+                      "profileImageUrl" : recentMessage.profileImageUrl,
+                      "uid" : recentMessage.uid]
+    let match = Match(dictionary: dictionary)
+    let controller = ChatLogController(match: match)
+    navigationController?.pushViewController(controller, animated: true)
+  }
+  
 }
 
 
@@ -124,7 +136,7 @@ extension MatchesMessagesController: UICollectionViewDelegateFlowLayout {
   
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-    return .init(top: 0, left: 16, bottom: 0, right: 16)
+    return .init(top: 0, left: 16, bottom: 16, right: 16)
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

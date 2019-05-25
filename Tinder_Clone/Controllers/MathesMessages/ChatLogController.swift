@@ -15,6 +15,8 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
   
   //MARK: - Properties
   
+  var currentUser: User?
+  
   fileprivate lazy var customNavBar = MessageNavBar(match: match)
   
   let customView = CustomInputAccessoryView()
@@ -53,9 +55,12 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    fetchCurrentUser()
+    
     NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardDidShowNotification, object: nil)
     
     fetchMessages()
+    
     
     setupUI()
   }
@@ -97,7 +102,66 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
   
   
   //MARK: - NETWORKING
+  
+  func fetchCurrentUser() {
+    guard let currentUserId = Auth.auth().currentUser?.uid else { return }
+    
+    Firestore.firestore().collection("users").document(currentUserId).getDocument { (snapshot, error) in
+      if let error = error {
+        print("Can't fetch the current user, \(error)")
+      }
+      
+      let data = snapshot?.data() ?? [:]
+      self.currentUser = User(dictionary: data)
+      
+    }
+  }
+  
+  
+  
+  
   @objc fileprivate func handleSend() {
+    
+    saveMessagesToUser()
+    saveMessagesToRecent()
+    
+  }
+  
+  fileprivate func saveMessagesToRecent() {
+    //Authorized user
+    guard let currentUserId = Auth.auth().currentUser?.uid else { return }
+    
+    guard let message = customInputView.textView.text else { return }
+    
+    let data = ["text" : message, "name" : match.name, "profileImageUrl" : match.profileImageUrl, "timestamp" : Timestamp(date: Date()), "uid" : match.uid] as [String : Any]
+    Firestore.firestore().collection("matches_messages").document(currentUserId).collection("recent_messages").document(match.uid).setData(data) { (error) in
+      
+      if let error = error {
+        print("Can't add new data: \(error)")
+        return
+      }
+      print("Saved recent message for Current User")
+    }
+    
+    
+    // Save the recent message for other direction user
+    guard let currentUser = self.currentUser else { return }
+    guard let userName = currentUser.name, let userImage = currentUser.imageUrl1 else { return }
+    
+    let toData = ["text" : message, "name" : userName, "profileImageUrl" : userImage, "timestamp" : Timestamp(date: Date()), "uid" : currentUserId] as [String : Any]
+    
+    Firestore.firestore().collection("matches_messages").document(match.uid).collection("recent_messages").document(currentUserId).setData(toData) { (error) in
+      
+      if let error = error {
+        print("Can't add new data for anothore User: \(error)")
+        return
+      }
+      print("Saved recent message for other User")
+    }
+    
+  }
+  
+  fileprivate func saveMessagesToUser() {
     
     //Authorized user
     guard let currentUserId = Auth.auth().currentUser?.uid else { return }
@@ -107,7 +171,8 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
     let collectionLoginAuth = Firestore.firestore().collection("matches_messages").document(currentUserId).collection(match.uid)
     
     let data = ["text" : message, "fromId" : currentUserId, "toId" : match.uid, "timestamp" : Timestamp(date: Date())] as [String : Any]
-    //data to save
+    
+    //data to save Current User
     collectionLoginAuth.addDocument(data: data) { (error) in
       if let error = error {
         print("Failed to save message:", error)
@@ -117,7 +182,7 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
       self.customInputView.textView.text = nil
       self.customInputView.placeholderLabel.isHidden = false
     }
-    
+    // Another User wich write the message back
     let collectionUser = Firestore.firestore().collection("matches_messages").document(match.uid).collection(currentUserId)
     
     collectionUser.addDocument(data: data) { (error) in
@@ -129,7 +194,6 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
       self.customInputView.textView.text = nil
       self.customInputView.placeholderLabel.isHidden = false
     }
-    
   }
   
   
@@ -193,6 +257,7 @@ extension ChatLogController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
     return .init(top: 16, left: 0, bottom: 16, right: 0)
   }
+  
   
 }
 
