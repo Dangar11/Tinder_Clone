@@ -13,6 +13,9 @@
 		DD35AE1C21F620B2005DD2D0 /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD35AE1B21F620B2005DD2D0 /* MatchView.swift */; };
 		DD35AE1E21F66058005DD2D0 /* SendMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD35AE1D21F66058005DD2D0 /* SendMessageButton.swift */; };
 		DD35AE2121F664CF005DD2D0 /* KeepSwipingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD35AE2021F664CF005DD2D0 /* KeepSwipingButton.swift */; };
+		DD4492E622989F6C00A203F7 /* MathesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4492E522989F6C00A203F7 /* MathesHeader.swift */; };
+		DD4492E92298A4B900A203F7 /* MatchesHorizontalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4492E82298A4B900A203F7 /* MatchesHorizontalController.swift */; };
+		DD4492EB2298B52600A203F7 /* RecentMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4492EA2298B52600A203F7 /* RecentMessageCell.swift */; };
 		DD81D91121E809AD0092B806 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD81D91021E809AD0092B806 /* GoogleService-Info.plist */; };
 		DD81D91321EA06130092B806 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD81D91221EA06130092B806 /* Bindable.swift */; };
 		DD87D7BD21E7A16E005FA9D2 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD87D7BC21E7A16E005FA9D2 /* RegistrationController.swift */; };
@@ -55,6 +58,9 @@
 		DD35AE1B21F620B2005DD2D0 /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MatchView.swift; path = Tinder_Clone/Views/MatchView.swift; sourceTree = SOURCE_ROOT; };
 		DD35AE1D21F66058005DD2D0 /* SendMessageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageButton.swift; sourceTree = "<group>"; };
 		DD35AE2021F664CF005DD2D0 /* KeepSwipingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepSwipingButton.swift; sourceTree = "<group>"; };
+		DD4492E522989F6C00A203F7 /* MathesHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathesHeader.swift; sourceTree = "<group>"; };
+		DD4492E82298A4B900A203F7 /* MatchesHorizontalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesHorizontalController.swift; sourceTree = "<group>"; };
+		DD4492EA2298B52600A203F7 /* RecentMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMessageCell.swift; sourceTree = "<group>"; };
 		DD81D91021E809AD0092B806 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DD81D91221EA06130092B806 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		DD87D7BC21E7A16E005FA9D2 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
@@ -128,6 +134,16 @@
 			path = Buttons;
 			sourceTree = "<group>";
 		};
+		DD4492E322989EC700A203F7 /* ChatLog */ = {
+			isa = PBXGroup;
+			children = (
+				DDB06F1A2296A391005207A8 /* CustomInputAccessView.swift */,
+				DDB06F0F22956ED7005207A8 /* MessagesNavBar.swift */,
+				DDB06F0D22956D89005207A8 /* MessageCell.swift */,
+			);
+			path = ChatLog;
+			sourceTree = "<group>";
+		};
 		DD8DAFEB21E504C5000E7E5E = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +191,7 @@
 		DD8DB00C21E50E9B000E7E5E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DD4492E322989EC700A203F7 /* ChatLog */,
 				DDB06EFA22942A51005207A8 /* MatchesMessages */,
 				DD35AE1F21F664B4005DD2D0 /* Buttons */,
 				DD8DB00D21E50ED0000E7E5E /* HomeBottomControlsStackView.swift */,
@@ -225,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				DDB06EF8229418D7005207A8 /* MatchesMessagesController.swift */,
+				DD4492E82298A4B900A203F7 /* MatchesHorizontalController.swift */,
 				DDB06F0922956D11005207A8 /* ChatLogController.swift */,
 			);
 			path = MathesMessages;
@@ -235,9 +253,8 @@
 			children = (
 				DDB06EFB22942A6C005207A8 /* MathesNavBar.swift */,
 				DDB06EFD22942EFF005207A8 /* MatchCell.swift */,
-				DDB06F0D22956D89005207A8 /* MessageCell.swift */,
-				DDB06F0F22956ED7005207A8 /* MessagesNavBar.swift */,
-				DDB06F1A2296A391005207A8 /* CustomInputAccessView.swift */,
+				DD4492E522989F6C00A203F7 /* MathesHeader.swift */,
+				DD4492EA2298B52600A203F7 /* RecentMessageCell.swift */,
 			);
 			path = MatchesMessages;
 			sourceTree = "<group>";
@@ -425,11 +442,13 @@
 				DDB06F0E22956D89005207A8 /* MessageCell.swift in Sources */,
 				DD8DB01921E628C8000E7E5E /* CardViewModel.swift in Sources */,
 				DDB06F082295052E005207A8 /* Match.swift in Sources */,
+				DD4492EB2298B52600A203F7 /* RecentMessageCell.swift in Sources */,
 				DDB06F1B2296A391005207A8 /* CustomInputAccessView.swift in Sources */,
 				DD35AE1C21F620B2005DD2D0 /* MatchView.swift in Sources */,
 				DDE1E15C21EF90CA00FF078C /* Firebase+Utils.swift in Sources */,
 				DDB06EF9229418D7005207A8 /* MatchesMessagesController.swift in Sources */,
 				DDE1E16721F101D200FF078C /* SwipingPhotoController.swift in Sources */,
+				DD4492E92298A4B900A203F7 /* MatchesHorizontalController.swift in Sources */,
 				DDB06F1022956ED7005207A8 /* MessagesNavBar.swift in Sources */,
 				DD8DB01221E5202C000E7E5E /* CardView.swift in Sources */,
 				DD35AE1E21F66058005DD2D0 /* SendMessageButton.swift in Sources */,
@@ -440,6 +459,7 @@
 				DD87D7BD21E7A16E005FA9D2 /* RegistrationController.swift in Sources */,
 				DD35AE2121F664CF005DD2D0 /* KeepSwipingButton.swift in Sources */,
 				DDB06F0A22956D11005207A8 /* ChatLogController.swift in Sources */,
+				DD4492E622989F6C00A203F7 /* MathesHeader.swift in Sources */,
 				DD8DB01521E61D80000E7E5E /* User.swift in Sources */,
 				DDE1E16221EFA44000FF078C /* LoginViewModel.swift in Sources */,
 				DD082C0F21ED3ECF00ABC240 /* SettingsCell.swift in Sources */,

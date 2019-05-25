@@ -13,6 +13,8 @@ import Firebase
 class ChatLogController: LBTAListController<MessageCell, Messages> {
   
   
+  //MARK: - Properties
+  
   fileprivate lazy var customNavBar = MessageNavBar(match: match)
   
   let customView = CustomInputAccessoryView()
@@ -27,8 +29,6 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
   }
   
   // Accessory view for input
-  
-  
   
   lazy var customInputView: CustomInputAccessoryView = {
     let civ = CustomInputAccessoryView(frame: .init(x: 0, y: 0, width: view.frame.width, height: 50))
@@ -48,13 +48,12 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
   }
   
   
+  //MARK: - VC Lifecycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardDidShowNotification, object: nil)
-    
-    collectionView.keyboardDismissMode = .interactive
     
     fetchMessages()
     
@@ -62,6 +61,7 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
   }
 
   
+  //MARK: - Methods
   
   fileprivate func setupUI() {
     collectionView.alwaysBounceVertical = true
@@ -76,6 +76,7 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
     collectionView.contentInset.top = navBarHeight
     //indicator for scrolling starts at navBarHeight
     collectionView.scrollIndicatorInsets.top = navBarHeight
+     collectionView.keyboardDismissMode = .interactive
     
     //Status bar cover for see throught the NavBar
     let statusBarCover = UIView(backgroundColor: .white)
@@ -84,10 +85,18 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
   }
   
   
+  
   @objc fileprivate func handleKeyboardShow() {
     self.collectionView.scrollToItem(at: [0, items.count - 1], at: .bottom, animated: true)
   }
   
+  @objc fileprivate func handleBack() {
+    navigationController?.popViewController(animated: true)
+  }
+  
+  
+  
+  //MARK: - NETWORKING
   @objc fileprivate func handleSend() {
     
     //Authorized user
@@ -152,9 +161,7 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
   }
   
   
-  @objc fileprivate func handleBack() {
-    navigationController?.popViewController(animated: true)
-  }
+
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -165,7 +172,7 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
 
 
 
-
+//MARK: - Collection Size
 extension ChatLogController: UICollectionViewDelegateFlowLayout {
   
   
@@ -188,6 +195,7 @@ extension ChatLogController: UICollectionViewDelegateFlowLayout {
   }
   
 }
+
 
 //Keyboard dissmiss tapping on the bubble
 extension UIViewController {

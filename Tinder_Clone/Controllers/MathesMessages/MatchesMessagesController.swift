@@ -9,59 +9,62 @@
 import LBTATools
 import Firebase
 
-//Use generic to implement default from UICollectionView
-class MatchesMessagesController: LBTAListController<MatchCell, Match> {
-  
-  let customNavBar = MatchesNavBar()
-  
 
+//Use generic to implement default from UICollectionView
+//LBTAListHeaderController<Cell,Model,Header>
+class MatchesMessagesController: LBTAListHeaderController<RecentMessageCell, UIColor, MathesHeader> {
+  
+  
+  
+  //MARK: - Properties
+  let customNavBar = MatchesNavBar()
+
+  let customNavBarHeight: CGFloat = 150
+  
+  // MARK: - VC Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    collectionView.backgroundColor = .white
     
-    fetchMatches()
+    setupUI()
     
-    //Custom navigation bar
-    customNavBar.backButton.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
-    view.addSubview(customNavBar)
-    customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: 0, height: 150))
-    
-    collectionView.contentInset.top = 150
+    items = [.red, .green, .blue, .purple]
     
   }
   
+  
+  //MARK: - METHODS
+
+  
+  
+  fileprivate func setupUI() {
+    collectionView.backgroundColor = .white
+    //Custom navigation bar
+    customNavBar.backButton.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
+    view.addSubview(customNavBar)
+    customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: .init(width: 0, height: customNavBarHeight))
+    
+    collectionView.contentInset.top = customNavBarHeight
+    collectionView.scrollIndicatorInsets.top = customNavBarHeight
+    
+    //Status bar cover for see throught the NavBar
+    let statusBarCover = UIView(backgroundColor: .white)
+    view.addSubview(statusBarCover)
+    statusBarCover.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor)
+  }
   
   @objc fileprivate func handleBack() {
     navigationController?.popViewController(animated: true)
   }
   
-  fileprivate func fetchMatches() {
-    //get the current Login userID
-    guard let currentUserId = Auth.auth().currentUser?.uid else { return }
-    
-    
-    Firestore.firestore().collection("matches_messages").document(currentUserId).collection("matches").getDocuments { (snapshot, error) in
-      
-      if let error = error {
-        print("Failed to fetch matches:", error)
-        return
-      }
-      
-      var mathes = [Match]()
-      
-      snapshot?.documents.forEach({ (documentSnapshot) in
-        let dict = documentSnapshot.data()
-        mathes.append(.init(dictionary: dict))
-      })
-      
-      self.items = mathes
-      self.collectionView.reloadData()
-    }
+  
+  
+  //MARK: - CollectionView Delegate
+  
+  override func setupHeader(_ header: MathesHeader) {
+    header.matchesHorizontalController.rootMatchesController = self
   }
   
-  
-  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let match = items[indexPath.item]
+  func didSelectMatchFromHeader(match: Match) {
     let chatLogController = ChatLogController(match: match)
     navigationController?.pushViewController(chatLogController, animated: true)
   }
@@ -72,14 +75,26 @@ class MatchesMessagesController: LBTAListController<MatchCell, Match> {
 //MARK: - UICollectionViewDelegateFlowLayout
 extension MatchesMessagesController: UICollectionViewDelegateFlowLayout {
   
+  
+  //MARKL - Cell
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return .init(width: 100, height: 120)
+    return .init(width: view.frame.width, height: 120)
   }
   
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-    return .init(top: 16, left: 0, bottom: 0, right: 0)
+    return .init(top: 0, left: 16, bottom: 0, right: 16)
   }
   
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return 0
+  }
+  
+  
+  //MARK: - Header
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    return .init(width: view.frame.width, height: 230)
+  }
   
 }
