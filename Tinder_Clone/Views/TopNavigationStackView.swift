@@ -22,9 +22,12 @@ class TopNavigationStackView: UIStackView {
         
         heightAnchor.constraint(equalToConstant: 70).isActive = true
         fireImageView.contentMode = .scaleAspectFit
-        
-       settingsButton.setImage(#imageLiteral(resourceName: "login").withRenderingMode(.alwaysOriginal), for: .normal)
-        messageButton.setImage(#imageLiteral(resourceName: "message").withRenderingMode(.alwaysOriginal), for: .normal)
+      
+      settingsButton.tintColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+      messageButton.tintColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+      
+       settingsButton.setImage(#imageLiteral(resourceName: "edit").withRenderingMode(.alwaysTemplate), for: .normal)
+        messageButton.setImage(#imageLiteral(resourceName: "message-1").withRenderingMode(.alwaysTemplate), for: .normal)
         
         [settingsButton, UIView(), fireImageView, UIView(), messageButton].forEach { (view) in
             addArrangedSubview(view)

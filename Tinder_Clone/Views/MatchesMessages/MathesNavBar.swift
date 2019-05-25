@@ -19,7 +19,7 @@ class MatchesNavBar: UIView {
     
     backgroundColor = .white
     
-    let iconImageView = UIImageView(image: #imageLiteral(resourceName: "message").withRenderingMode(.alwaysTemplate), contentMode: .scaleAspectFit)
+    let iconImageView = UIImageView(image: #imageLiteral(resourceName: "message-1").withRenderingMode(.alwaysTemplate), contentMode: .scaleAspectFit)
     iconImageView.tintColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
     let messagesLabel = UILabel(text: "Messages",
                                 font: .boldSystemFont(ofSize: 20),

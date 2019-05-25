@@ -75,7 +75,6 @@ class UserDetailController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         setupLayout()
         setupVisualBlurEffectView()
         setupBottomControls()
@@ -83,10 +82,6 @@ class UserDetailController: UIViewController {
     }
     
 
-
-    
-    
-    
     //MARK: - Setup UI
     fileprivate func setupVisualBlurEffectView() {
         let blurEffect = UIBlurEffect(style: .extraLight)
