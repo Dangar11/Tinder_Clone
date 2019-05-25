@@ -9,7 +9,7 @@
 import LBTATools
 
 
-class RecentMessageCell: LBTAListCell<UIColor> {
+class RecentMessageCell: LBTAListCell<RecentMessage> {
   
   let imageViewSize: CGFloat = 90
   
@@ -18,9 +18,11 @@ class RecentMessageCell: LBTAListCell<UIColor> {
   let messageTextLabel = UILabel(text: "Some long line of text that should spend the entire view", font: .systemFont(ofSize: 14, weight: .regular), textColor: .gray, numberOfLines: 2)
   
   
-  override var item: UIColor! {
+  override var item: RecentMessage! {
     didSet {
-//      backgroundColor = item
+      userProfileImageView.sd_setImage(with: URL(string: item.profileImageUrl))
+      userNameLabel.text = item.name
+      messageTextLabel.text = item.text
     }
   }
   

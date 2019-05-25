@@ -12,28 +12,69 @@ import Firebase
 
 //Use generic to implement default from UICollectionView
 //LBTAListHeaderController<Cell,Model,Header>
-class MatchesMessagesController: LBTAListHeaderController<RecentMessageCell, UIColor, MathesHeader> {
-  
-  
+class MatchesMessagesController: LBTAListHeaderController<RecentMessageCell, RecentMessage, MathesHeader> {
   
   //MARK: - Properties
   let customNavBar = MatchesNavBar()
 
   let customNavBarHeight: CGFloat = 150
   
+  var recentMessagesDictionary = [String : RecentMessage]()
+  
   // MARK: - VC Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    fetchRecentMessages()
     setupUI()
     
-    items = [.red, .green, .blue, .purple]
+    items = [
+//    RecentMessage(text: "Some random message that I'will use for each recent message cell and it's werry long here.", uid: "Bland", name: "Tony Stark", profileImageUrl: "https://firebasestorage.googleapis.com/v0/b/tinderfirestore-6cfe6.appspot.com/o/images%2FDF052839-BD37-4CB3-ADA1-4D4924EA442E?alt=media&token=c4a7386b-a03c-4286-bb0b-bf35abd373b2", timeStamp: Timestamp(date: Date())),
+//    RecentMessage(text: "Some random message that I'will use for each recent message cell", uid: "Bland", name: "Tony Stark", profileImageUrl: "https://firebasestorage.googleapis.com/v0/b/tinderfirestore-6cfe6.appspot.com/o/images%2FDF052839-BD37-4CB3-ADA1-4D4924EA442E?alt=media&token=c4a7386b-a03c-4286-bb0b-bf35abd373b2", timeStamp: Timestamp(date: Date())),
+//    RecentMessage(text: "Some random message that I'will use for each recent message cell", uid: "Bland", name: "Tony Stark", profileImageUrl: "https://firebasestorage.googleapis.com/v0/b/tinderfirestore-6cfe6.appspot.com/o/images%2FDF052839-BD37-4CB3-ADA1-4D4924EA442E?alt=media&token=c4a7386b-a03c-4286-bb0b-bf35abd373b2", timeStamp: Timestamp(date: Date())),
+//    RecentMessage(text: "Some random message that I'will use for each recent message cell", uid: "Bland", name: "Tony Stark", profileImageUrl: "https://firebasestorage.googleapis.com/v0/b/tinderfirestore-6cfe6.appspot.com/o/images%2FDF052839-BD37-4CB3-ADA1-4D4924EA442E?alt=media&token=c4a7386b-a03c-4286-bb0b-bf35abd373b2", timeStamp: Timestamp(date: Date())),
+//    RecentMessage(text: "Some random message that I'will use for each recent message cell", uid: "Bland", name: "Tony Stark", profileImageUrl: "https://firebasestorage.googleapis.com/v0/b/tinderfirestore-6cfe6.appspot.com/o/images%2FDF052839-BD37-4CB3-ADA1-4D4924EA442E?alt=media&token=c4a7386b-a03c-4286-bb0b-bf35abd373b2", timeStamp: Timestamp(date: Date())),
+    
+    
+    ]
     
   }
   
   
   //MARK: - METHODS
 
+  
+  fileprivate func fetchRecentMessages() {
+    
+    guard let currentUserId = Auth.auth().currentUser?.uid else { return }
+    
+    Firestore.firestore().collection("matches_messages").document(currentUserId).collection("recent_messages").addSnapshotListener { (querySnapshot, error) in
+      if let error = error {
+        print("Error to fetch recent_messages:", error)
+      }
+      
+      querySnapshot?.documentChanges.forEach({ (change) in
+        if change.type == .added || change.type == .modified {
+          let dictonary = change.document.data()
+          let recentMessage = RecentMessage(dictionary: dictonary)
+          self.recentMessagesDictionary[recentMessage.uid] = recentMessage
+        }
+      })
+      
+      self.resetItems()
+      
+    }
+  }
+  
+  fileprivate func resetItems() {
+    //turns all values from dictionary into array
+    let values = Array(recentMessagesDictionary.values)
+    //get the values and sorted them Descending by timeStamp criteria
+    items = values.sorted(by: { (recentMessage1, recentMessage2) -> Bool in
+      return recentMessage1.timeStamp.compare(recentMessage2.timeStamp) == .orderedDescending
+    })
+    collectionView.reloadData()
+  }
   
   
   fileprivate func setupUI() {
