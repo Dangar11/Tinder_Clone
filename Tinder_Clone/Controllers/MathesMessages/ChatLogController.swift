@@ -17,6 +17,8 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
   
   var currentUser: User?
   
+  var listener: ListenerRegistration?
+  
   fileprivate lazy var customNavBar = MessageNavBar(match: match)
   
   let customView = CustomInputAccessoryView()
@@ -60,9 +62,21 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
     NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardDidShowNotification, object: nil)
     
     fetchMessages()
-    
-    
     setupUI()
+  }
+  
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    
+    // tells that it's beeing popOff nav stack
+    if isMovingFromParent {
+      listener?.remove()
+    }
+  }
+  
+  deinit {
+    print("ChatLogController deinit")
   }
 
   
@@ -199,7 +213,6 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
   
   
   fileprivate func fetchMessages() {
-    print("Fetching messages")
     
     guard let currentUserId = Auth.auth().currentUser?.uid else { return }
     
@@ -207,7 +220,7 @@ class ChatLogController: LBTAListController<MessageCell, Messages> {
     
     
     //Listen for data changes in Firebase in this case document added
-    query.addSnapshotListener { (querySnapshot, error) in
+    listener = query.addSnapshotListener { (querySnapshot, error) in
       if let error = error {
         print("Failed to fetch messages:", error)
         return

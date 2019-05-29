@@ -71,6 +71,9 @@ class SettingsController: UITableViewController {
     return button
   }
   
+  deinit {
+    print("SettingsController deinit")
+  }
   
   
   let buttonBarWidth = 44

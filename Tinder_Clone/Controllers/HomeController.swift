@@ -12,8 +12,6 @@ import JGProgressHUD
 
 class HomeController: UIViewController {
     
-    
-    
     var swipes = [String : Int]()
   
     //Save users for matches massages screen
@@ -50,13 +48,14 @@ class HomeController: UIViewController {
       
         setupLayout()
         fetchCurrentUser()
-        
+      
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-      print(#function)
+      
+      
         // you want to kick the user out when they log out
         if Auth.auth().currentUser == nil {
             let registrationController = RegistrationController()
@@ -65,9 +64,8 @@ class HomeController: UIViewController {
             present(navController, animated: true)
         }
     }
-    
 
-    
+  
     fileprivate func saveSwipeToFirestore(didLike: Int) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let cardUID = topCardView?.cardViewModel.uid else { return }
@@ -153,7 +151,7 @@ class HomeController: UIViewController {
         //pagination 2 users at a time
         let query = Firestore.firestore().collection("users").whereField("age", isGreaterThanOrEqualTo: minAge).whereField("age", isLessThanOrEqualTo: maxAge).limit(to: 10)
         topCardView = nil
-        query.getDocuments { [unowned self] (snapshot, error) in
+        query.getDocuments { (snapshot, error) in
             self.hud.dismiss()
             if let error = error {
                 print("Failed to fetch users: ", error)
@@ -165,7 +163,7 @@ class HomeController: UIViewController {
             //Linked List
             var previousCardView: CardView?
             
-            snapshot?.documents.forEach({ [unowned self] (documentSnapshot) in
+            snapshot?.documents.forEach({ (documentSnapshot) in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
               

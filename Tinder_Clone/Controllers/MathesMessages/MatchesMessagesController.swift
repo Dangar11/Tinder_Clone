@@ -16,6 +16,8 @@ class MatchesMessagesController: LBTAListHeaderController<RecentMessageCell, Rec
   
   //MARK: - Properties
   let customNavBar = MatchesNavBar()
+  //retain cycle
+  var listener : ListenerRegistration?
 
   let customNavBarHeight: CGFloat = 150
   
@@ -28,16 +30,21 @@ class MatchesMessagesController: LBTAListHeaderController<RecentMessageCell, Rec
     fetchRecentMessages()
     setupUI()
     
-    items = [
-//    RecentMessage(text: "Some random message that I'will use for each recent message cell and it's werry long here.", uid: "Bland", name: "Tony Stark", profileImageUrl: "https://firebasestorage.googleapis.com/v0/b/tinderfirestore-6cfe6.appspot.com/o/images%2FDF052839-BD37-4CB3-ADA1-4D4924EA442E?alt=media&token=c4a7386b-a03c-4286-bb0b-bf35abd373b2", timeStamp: Timestamp(date: Date())),
-//    RecentMessage(text: "Some random message that I'will use for each recent message cell", uid: "Bland", name: "Tony Stark", profileImageUrl: "https://firebasestorage.googleapis.com/v0/b/tinderfirestore-6cfe6.appspot.com/o/images%2FDF052839-BD37-4CB3-ADA1-4D4924EA442E?alt=media&token=c4a7386b-a03c-4286-bb0b-bf35abd373b2", timeStamp: Timestamp(date: Date())),
-//    RecentMessage(text: "Some random message that I'will use for each recent message cell", uid: "Bland", name: "Tony Stark", profileImageUrl: "https://firebasestorage.googleapis.com/v0/b/tinderfirestore-6cfe6.appspot.com/o/images%2FDF052839-BD37-4CB3-ADA1-4D4924EA442E?alt=media&token=c4a7386b-a03c-4286-bb0b-bf35abd373b2", timeStamp: Timestamp(date: Date())),
-//    RecentMessage(text: "Some random message that I'will use for each recent message cell", uid: "Bland", name: "Tony Stark", profileImageUrl: "https://firebasestorage.googleapis.com/v0/b/tinderfirestore-6cfe6.appspot.com/o/images%2FDF052839-BD37-4CB3-ADA1-4D4924EA442E?alt=media&token=c4a7386b-a03c-4286-bb0b-bf35abd373b2", timeStamp: Timestamp(date: Date())),
-//    RecentMessage(text: "Some random message that I'will use for each recent message cell", uid: "Bland", name: "Tony Stark", profileImageUrl: "https://firebasestorage.googleapis.com/v0/b/tinderfirestore-6cfe6.appspot.com/o/images%2FDF052839-BD37-4CB3-ADA1-4D4924EA442E?alt=media&token=c4a7386b-a03c-4286-bb0b-bf35abd373b2", timeStamp: Timestamp(date: Date())),
+    items = []
     
+  }
+  
+  //fixing memory leak issue
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
     
-    ]
-    
+    if isMovingFromParent {
+      listener?.remove()
+    }
+  }
+  
+  deinit {
+    print("MatchesMessagesController deinit")
   }
   
   
@@ -48,7 +55,9 @@ class MatchesMessagesController: LBTAListHeaderController<RecentMessageCell, Rec
     
     guard let currentUserId = Auth.auth().currentUser?.uid else { return }
     
-    Firestore.firestore().collection("matches_messages").document(currentUserId).collection("recent_messages").addSnapshotListener { (querySnapshot, error) in
+    let query = Firestore.firestore().collection("matches_messages").document(currentUserId).collection("recent_messages")
+    
+    listener = query.addSnapshotListener { (querySnapshot, error) in
       if let error = error {
         print("Error to fetch recent_messages:", error)
       }
@@ -101,7 +110,7 @@ class MatchesMessagesController: LBTAListHeaderController<RecentMessageCell, Rec
   
   //MARK: - CollectionView Delegate
   
-  override func setupHeader(_ header: MathesHeader) {
+  override func setupHeader(_ header: MathesHeader) { 
     header.matchesHorizontalController.rootMatchesController = self
   }
   

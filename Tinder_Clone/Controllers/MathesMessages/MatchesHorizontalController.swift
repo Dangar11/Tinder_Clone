@@ -12,7 +12,7 @@ import Firebase
 class MatchesHorizontalController: LBTAListController<MatchCell, Match> {
   
   
-  var rootMatchesController: MatchesMessagesController?
+  weak var rootMatchesController: MatchesMessagesController?
 
   
   override func viewDidLoad() {
